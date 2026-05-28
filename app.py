@@ -24,13 +24,13 @@ if page == "Submission Matrix":
 
     for form_name, config in FORMS.items():
 
-    df = load_odk_data(config["form_id"])
+        df = load_odk_data(config["form_id"])
 
-    st.write(form_name)
-    st.write(df.columns)
+        st.write(form_name)
+        st.write(df.columns)
 
-    if df.empty:
-        continue
+        if df.empty:
+            continue
 
         # Submitter column
         submit_col = "enumerator.Enumerator_name"
