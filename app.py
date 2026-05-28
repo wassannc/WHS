@@ -39,7 +39,7 @@ if page == "Submission Matrix":
         if submit_col not in df.columns:
             continue
 
-        # Count submissions
+        df = df[df[submit_col].notna()]
         temp = (
             df.groupby(submit_col)
             .size()
