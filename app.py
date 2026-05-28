@@ -10,53 +10,53 @@ menu_items = ["Submission Matrix"] + list(FORMS.keys())
 page = st.sidebar.radio("Go to", menu_items)
 import pandas as pd
 
-  if page == "Submission Matrix":
+if page == "Submission Matrix":
 
-        st.title("📊 Submission Matrix")
+      st.title("📊 Submission Matrix")
 
-        all_data = []
+      all_data = []
 
-        for form_name, config in FORMS.items():
+      for form_name, config in FORMS.items():
 
-            df = load_odk_data(config["form_id"])
+          df = load_odk_data(config["form_id"])
 
-            if df.empty:
-                continue
+          if df.empty:
+              continue
 
-            # identify submitter column
-            submit_col = None
+          # identify submitter column
+          submit_col = None
 
-            possible_cols = [
-                "enumerator-Enumerator_name"
-            ]
+          possible_cols = [
+              "enumerator-Enumerator_name"
+          ]
 
-            for col in possible_cols:
-                if col in df.columns:
-                    submit_col = col
-                    break
+          for col in possible_cols:
+              if col in df.columns:
+                  submit_col = col
+                  break
 
-            if submit_col is None:
-                continue
+          if submit_col is None:
+              continue
 
-            # count submissions
-            temp = (
-                df.groupby(submit_col)
-                .size()
-                .reset_index(name="Count")
-        )
+          # count submissions
+          temp = (
+              df.groupby(submit_col)
+              .size()
+              .reset_index(name="Count")
+      )
 
-        temp["Form"] = form_name
+      temp["Form"] = form_name
 
-        temp.columns = ["Person", "Count", "Form"]
+      temp.columns = ["Person", "Count", "Form"]
 
-        all_data.append(temp)
+      all_data.append(temp)
 
-    # combine all forms
-    if all_data:
+  # combine all forms
+  if all_data:
 
-        final_df = pd.concat(all_data)
+      final_df = pd.concat(all_data)
 
-        # pivot table
+      # pivot table
         matrix = final_df.pivot_table(
             index="Person",
             columns="Form",
