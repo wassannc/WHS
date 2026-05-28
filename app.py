@@ -30,7 +30,7 @@ if page == "Submission Matrix":
             continue
 
         # Submitter column
-        submit_col = "enumerator-Enumerator_name"
+        submit_col = "enumerator.Enumerator_name"
 
         # Skip if column not found
         if submit_col not in df.columns:
