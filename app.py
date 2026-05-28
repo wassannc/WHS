@@ -26,38 +26,39 @@ if page == "Submission Matrix":
 
         df = load_odk_data(config["form_id"])
 
-        st.write(form_name)
-        st.write(df.columns)
-
         if df.empty:
             continue
 
-        # Submitter column
+        # Enumerator column
         submit_col = "enumerator.Enumerator_name"
 
-        # Skip if column not found
         if submit_col not in df.columns:
             continue
 
+        # Remove empty values
         df = df[df[submit_col].notna()]
+
+        # Count submissions
         temp = (
             df.groupby(submit_col)
             .size()
             .reset_index(name="Count")
         )
 
+        # Add form name
         temp["Form"] = form_name
 
+        # Rename columns
         temp.columns = ["Person", "Count", "Form"]
 
+        # Append
         all_data.append(temp)
 
-    # Combine all forms
-    if all_data:
+    # FINAL OUTPUT
+    if len(all_data) > 0:
 
         final_df = pd.concat(all_data)
 
-        # Create matrix
         matrix = final_df.pivot_table(
             index="Person",
             columns="Form",
