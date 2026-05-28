@@ -116,9 +116,7 @@ elif page == "Submission Matrix":
         submit_col = None
 
         possible_cols = [
-            "__system.submitterName",
-            "__system.submitterId",
-            "Submitted by"
+            "enumerator-Enumerator_name"
         ]
 
         for col in possible_cols:
