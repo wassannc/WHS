@@ -5,7 +5,7 @@ from utils import load_odk_data
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
-menu_items = ["Survey-Status"] + list(FORMS.keys())
+menu_items = ["Survey-Status", "Submission Matrix"] + list(FORMS.keys())
 
 page = st.sidebar.radio("Go to", menu_items)
 
@@ -99,6 +99,66 @@ if page == "Survey-Status":
                 else:
                     st.warning(f"{landscape_col} not found")
 
+elif page == "Submission Matrix":
+
+    st.title("📊 Submission Matrix")
+
+    all_data = []
+
+    for form_name, config in FORMS.items():
+
+        df = load_odk_data(config["form_id"])
+
+        if df.empty:
+            continue
+
+        # identify submitter column
+        submit_col = None
+
+        possible_cols = [
+            "__system.submitterName",
+            "__system.submitterId",
+            "Submitted by"
+        ]
+
+        for col in possible_cols:
+            if col in df.columns:
+                submit_col = col
+                break
+
+        if submit_col is None:
+            continue
+
+        # count submissions
+        temp = (
+            df.groupby(submit_col)
+            .size()
+            .reset_index(name="Count")
+        )
+
+        temp["Form"] = form_name
+
+        temp.columns = ["Person", "Count", "Form"]
+
+        all_data.append(temp)
+
+    # combine all forms
+    if all_data:
+
+        final_df = pd.concat(all_data)
+
+        # pivot table
+        matrix = final_df.pivot_table(
+            index="Person",
+            columns="Form",
+            values="Count",
+            fill_value=0
+        )
+
+        st.dataframe(matrix, use_container_width=True)
+
+    else:
+        st.warning("No data found")
 elif page in FORMS:
     st.title(f"📥 {page} Report")
 
