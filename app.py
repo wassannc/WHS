@@ -38,29 +38,29 @@ def push_to_google_sheet(df):
             data[i:i+chunk_size]
         )
     
-st.set_page_config(page_title="MIS Tracking-SABAL", layout="wide")
-st.title("📊 MIS Tracking - SABAL")
+st.set_page_config(page_title="Assessment of WHS", layout="wide")
+st.title("📊 Assessment of WHS")
 
 st.sidebar.title("Menu")
 
 main_section = st.sidebar.radio(
     "Select Section",
-    ["MIS-Status", "MIS-Reports"]
+    ["Survey-Status", "Survey-Data"]
 )
 
-if main_section == "MIS-Reports":
+if main_section == "Survey-Status":
     page = st.sidebar.radio(
         "Select Form",
         list(FORMS.keys())
     )
 else:
-    page = "MIS-Status"
+    page = "Survey-Status"
 
-if page == "MIS-Status":
+if page == "Survey-Status":
     import pandas as pd
     import calendar
 
-    st.title(" MIS Status")
+    st.title(" Survey-Status")
     today = str(date.today())
 
     # Check last sync date
