@@ -5,15 +5,15 @@ from utils import load_odk_data
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
-menu_items = ["MIS-Status"] + list(FORMS.keys())
+menu_items = ["Survey-Status"] + list(FORMS.keys())
 
 page = st.sidebar.radio("Go to", menu_items)
 
-if page == "MIS-Status":
+if page == "Survey-Status":
     import pandas as pd
     import calendar
 
-    st.title("📊 MIS Status")
+    st.title("📊 Survey-Status")
 
     # ---------------- FILTERS ----------------
     col1, col2 = st.columns(2)
