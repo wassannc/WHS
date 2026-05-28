@@ -14,7 +14,6 @@ def load_odk_data(form_id):
     response = requests.get(url, auth=(USERNAME, PASSWORD))
 
     if response.status_code != 200:
-        st.error(f"Error: {response.status_code}")
         return pd.DataFrame()
 
     data = response.json()
