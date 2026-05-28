@@ -5,7 +5,7 @@ from utils import load_odk_data
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
-menu_items = ["Survey-Status", "Submission Matrix"] + list(FORMS.keys())
+menu_items = ["Submission Matrix"] + list(FORMS.keys())
 
 page = st.sidebar.radio("Go to", menu_items)
 
