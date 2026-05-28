@@ -1,133 +1,19 @@
-import gspread
-from google.oauth2.service_account import Credentials
 import streamlit as st
-import pandas as pd
-from datetime import date
 from config import FORMS
 from utils import load_odk_data
-def push_to_google_sheet(df):
 
-    scope = [
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive"
-    ]
-
-    creds = Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"], scopes=scope
-    )
-
-    client = gspread.authorize(creds)
-
-    sheet = client.open("Reminder_SABAL").worksheet("Data")
-
-    # 🔥 SAFE CONVERSION
-    df = df.fillna("").astype(str)
-
-    # Prepare data
-    data = [df.columns.values.tolist()] + df.values.tolist()
-
-    # Clear sheet
-    sheet.clear()
-
-    # Upload in chunks (prevents error)
-    chunk_size = 5000
-
-    for i in range(0, len(data), chunk_size):
-        sheet.update(
-            f"A{i+1}",
-            data[i:i+chunk_size]
-        )
-    
-st.set_page_config(page_title="Assessment of WHS", layout="wide")
-st.title("📊 Assessment of WHS")
+st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
+menu_items = ["MIS-Status"] + list(FORMS.keys())
 
-main_section = st.sidebar.radio(
-    "Select Section",
-    ["Survey-Status", "Survey-Data"]
-)
+page = st.sidebar.radio("Go to", menu_items)
 
-if main_section == "Survey-Status":
-    page = st.sidebar.radio(
-        "Select Form",
-        list(FORMS.keys())
-    )
-else:
-    page = "Survey-Status"
-
-if page == "Survey-Status":
+if page == "MIS-Status":
     import pandas as pd
     import calendar
 
-    st.title(" Survey-Status")
-    today = str(date.today())
-
-    # Check last sync date
-    if "last_sync" not in st.session_state:
-        st.session_state["last_sync"] = ""
-
-    if st.session_state["last_sync"] != today:
-
-        with st.spinner("🔄 Auto syncing data..."):
-
-            all_data = []
-
-            for form_name, config in FORMS.items():
-                df = load_odk_data(config["form_id"])
-
-                if df.empty:
-                    continue
-
-                landscape_col = config.get("landscape_col")
-
-                if landscape_col in df.columns:
-                    landscape = df[landscape_col]
-                else:
-                    landscape = "Unknown"
-
-                date_series = None
-                for col in ["__system.submissionDate", "meta.submissionDate"]:
-                    if col in df.columns:
-                        date_series = pd.to_datetime(df[col], errors="coerce")
-                        break
-
-                if date_series is None:
-                    continue
-
-                temp_df = pd.DataFrame({
-                    "Landscape": landscape,
-                    "Date": date_series,
-                    "Form": form_name
-                })
-
-                temp_df["Month"] = temp_df["Date"].dt.to_period("M").astype(str)
-
-                temp_df = (
-                    temp_df
-                    .groupby(["Landscape", "Month", "Form"])
-                    .size()
-                    .reset_index(name="Count")
-                )
-
-                all_data.append(temp_df)
-
-            if all_data:
-                final_df = pd.concat(all_data, ignore_index=True)
-
-                current_month = str(pd.Timestamp.now().to_period("M"))
-                final_df = final_df[final_df["Month"] == current_month]
-
-                final_df = final_df.sort_values(["Month", "Landscape", "Form"])
-
-                push_to_google_sheet(final_df)
-
-                st.session_state["last_sync"] = today
-
-                st.success("✅ Auto sync completed!")
-
-            else:
-                st.warning("No data available to sync")
+    st.title("📊 MIS Status")
 
     # ---------------- FILTERS ----------------
     col1, col2 = st.columns(2)
@@ -221,7 +107,6 @@ elif page in FORMS:
 
     if df.empty:
         st.warning("No data found")
-
     else:
         # Select only required columns
         columns = config.get("columns", [])
