@@ -25,7 +25,9 @@ if page == "Submission Matrix":
     for form_name, config in FORMS.items():
 
         df = load_odk_data(config["form_id"])
-
+        st.write(form_name)
+        st.write(df.head())
+        
         if df.empty:
             continue
 
