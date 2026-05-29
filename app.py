@@ -36,12 +36,22 @@ if page == "Submission Matrix":
         if "enumerator-Enumerator_name" in df.columns:
             st.write(df["enumerator-Enumerator_name"].dropna().head(10))
         # Enumerator column
-        submit_col = "enumerator-Enumerator_name"
+        submit_col = None
+        for col in df.columns:
+            if "enumerator" in col.lower():
+                submit_col = col
+                break
+        if submit_col is None:
+            st.write(f"{form_name}: no enumerator column")
+            continue
 
         if submit_col not in df.columns:
             continue
 
         # Remove empty values
+        if submit_col not in df.columns:
+            st.write(f"{form_name}: Enumerator column not found")
+            continue
         df = df[df[submit_col].notna()]
 
         # Count submissions
