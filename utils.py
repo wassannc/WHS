@@ -9,17 +9,30 @@ PROJECT_ID = st.secrets["PROJECT_ID"]
 
 @st.cache_data(ttl=300)
 def load_odk_data(form_id):
+
     url = f"{ODK_URL}/v1/projects/{PROJECT_ID}/forms/{form_id}.svc/Submissions"
-    
-    response = requests.get(url, auth=(USERNAME, PASSWORD))
+
+    response = requests.get(
+        url,
+        auth=(USERNAME, PASSWORD)
+    )
+
+    st.write("URL:", url)
+    st.write("Status:", response.status_code)
 
     if response.status_code != 200:
         return pd.DataFrame()
 
     data = response.json()
 
+    st.write("Keys:", data.keys())
+
     if "value" not in data:
+        st.write(data)
         return pd.DataFrame()
 
     df = pd.json_normalize(data["value"])
+
+    st.write("Rows loaded:", len(df))
+
     return df
