@@ -24,64 +24,36 @@ if page == "Submission Matrix":
 
     for form_name, config in FORMS.items():
 
-    df = load_odk_data(config["form_id"])
-        st.write("Form:", form_name)
+        df = load_odk_data(config["form_id"])
+
         if df.empty:
-            st.write("No data returned")
             continue
-        st.write("Rows:", len(df))
-        st.write(df.columns.tolist())
-        if "enumerator-Enumerator_name" in df.columns:
-            st.write(df["enumerator-Enumerator_name"].head(20))
-        else:
-            st.write("Enumerator column not found")
-        
-        if df.empty:
-            st.write("No data returned")
-            continue
-        st.write("Rows:", len(df))
-        st.write("Column exists:", "enumerator-Enumerator_name" in df.columns)
-        if "enumerator-Enumerator_name" in df.columns:
-            st.write(df["enumerator-Enumerator_name"].dropna().head(10))
-        # Enumerator column
-        submit_col = None
-        for col in df.columns:
-            if "enumerator" in col.lower():
-                submit_col = col
-                break
-        if submit_col is None:
-            st.write(f"{form_name}: no enumerator column")
-            continue
+
+        submit_col = "enumerator-Enumerator_name"
 
         if submit_col not in df.columns:
             continue
 
-        # Remove empty values
-        if submit_col not in df.columns:
-            st.write(f"{form_name}: Enumerator column not found")
-            continue
         df = df[df[submit_col].notna()]
 
-        # Count submissions
+        if df.empty:
+            continue
+
         temp = (
             df.groupby(submit_col)
             .size()
             .reset_index(name="Count")
         )
 
-        # Add form name
         temp["Form"] = form_name
 
-        # Rename columns
         temp.columns = ["Person", "Count", "Form"]
 
-        # Append
         all_data.append(temp)
 
-    # FINAL OUTPUT
-    if len(all_data) > 0:
+    if all_data:
 
-        final_df = pd.concat(all_data)
+        final_df = pd.concat(all_data, ignore_index=True)
 
         matrix = final_df.pivot_table(
             index="Person",
