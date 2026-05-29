@@ -26,17 +26,17 @@ if page == "Submission Matrix":
 
         df = load_odk_data(config["form_id"])
         st.write("Form:", form_name)
-        st.write(df["enumerator-Enumerator_name"].head(20))
+        st.write(df["enumerator.Enumerator_name"].head(20))
         
         if df.empty:
             st.write("No data returned")
             continue
         st.write("Rows:", len(df))
-        st.write("Column exists:", "enumerator-Enumerator_name" in df.columns)
-        if "enumerator-Enumerator_name" in df.columns:
-            st.write(df["enumerator-Enumerator_name"].dropna().head(10))
+        st.write("Column exists:", "enumerator.Enumerator_name" in df.columns)
+        if "enumerator.Enumerator_name" in df.columns:
+            st.write(df["enumerator.Enumerator_name"].dropna().head(10))
         # Enumerator column
-        submit_col = "enumerator-Enumerator_name"
+        submit_col = "enumerator.Enumerator_name"
 
         if submit_col not in df.columns:
             continue
