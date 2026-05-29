@@ -26,7 +26,7 @@ if page == "Submission Matrix":
 
         df = load_odk_data(config["form_id"])
         st.write(form_name)
-        st.write(df.head())
+        st.write(df["enumerator-Enumerator_name"].head(20))
         
         if df.empty:
             continue
