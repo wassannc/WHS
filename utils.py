@@ -12,7 +12,7 @@ import io
 @st.cache_data(ttl=300)
 def load_odk_data(form_id):
 
-    url = f"{ODK_URL}/v1/projects/{PROJECT_ID}/forms/{form_id}/submissions.csv"
+    url = f"{ODK_URL}/v1/projects/{PROJECT_ID}/forms/{form_id}.csv"
 
     st.write("FORM ID =", repr(form_id))
     st.write("URL =", url)
