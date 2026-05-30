@@ -1,8 +1,8 @@
 FORMS = {
     "1. Basic Information": {
         "form_id": "Basic_info",
-        "columns": ["geo-district","geo-block","geo-gp","geo-village","geo-village_gps","Households-community","Households-total_hhs","Households-population","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
-        "landscape_col": "geo-village"
+        "columns": ["geo.district","geo.block","geo.gp","geo.village","geo.village_gps","Households.community","Households.total_hhs","Households.population","enumerator.Enumerator_name","enumerator.Enumerator_mobile"],
+        "landscape_col": "geo.village"
     },
     "1.1 Water Discharge": {
         "form_id": "1.1 Discarge",
