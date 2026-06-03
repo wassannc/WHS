@@ -29,9 +29,9 @@ FORMS = {
         "columns": ["SubmissionDate","basic_info-landscape","basic_info-gp","basic_info-village","basic_info-orchard_type","basic_info-farmer_add","type"],
         "landscape_col": "basic_info-landscape"
     },
-    "6- Lead_statement": {
-        "form_id": "6- Lead_statement",
-        "columns": ["SubmissionDate","pd-landscape","pd-gp","pd-village","farm_equipmnt_hired","ASC_Entp","ud-chc_equipmnt_rented_date","ud-chc_equipmnt_hired_farmer","ud-chc_equipmnt_total_hours_used","ud-total_hired_cost"],
-        "landscape_col": "pd-landscape"
+    "6. Lead_statement": {
+        "form_id": "6. Lead_statement",
+        "columns": ["lead_statement-block","lead_statement-gp","lead_statement-village","sand-plainroad_kms_from_Kothavala","sand-ghatroad_kms_from_Kothavalas","metal-plainroad_kms_mamidipalli_metal","metal-ghatroad_kms_mamidipalli_metal","ud-chc_equipmnt_hired_farmer","ud-chc_equipmnt_total_hours_used","stone-place_stone","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
+        "landscape_col": "lead_statement-village"
     }
 }
