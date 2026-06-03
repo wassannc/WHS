@@ -23,7 +23,7 @@ if page == "Submission Matrix":
 
     for form_name, config in FORMS.items():
 
-        df = load_odk_data(config["form_id"])
+        df = load_data(config["form_id"])
 
         # DEBUG
         st.write("FORM:", form_name)
