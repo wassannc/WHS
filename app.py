@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from config import FORMS
-from utils import load_odk_data
+from utils import load_data
 
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
