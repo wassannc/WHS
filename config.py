@@ -1,11 +1,11 @@
 FORMS = {
-    "1- Basic Information": {
+    "1. Basic Information": {
         "form_id": "Basic_info",
         "columns": ["geo-district","geo-block","geo-gp","geo-village","Households-community","Households-total_hhs","Households-population","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
         "landscape_col": "geo-village"
     },
-    "1-1 Water Discharge": {
-        "form_id": "1-1 Discarge",
+    "1.1 Water Discharge": {
+        "form_id": "1.1 Discarge",
         "columns": ["basic_info-Date","basic_info-block","basic_info-gp","basic_info-village","basic_info-name_water_source","discharge-Discarge","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
         "landscape_col": "basic_info-village"
     },
