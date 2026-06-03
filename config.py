@@ -6,8 +6,8 @@ FORMS = {
     },
     "1-1 Water Discharge": {
         "form_id": "1-1 Discarge",
-        "columns": ["Primary_details-date","Primary_details-landscape","Primary_details-gp","Primary_details-village","Primary_details-farmer_name","Primary_details-plot_ext","crop_activity","Nf_activites-nf_inputs","Nf_activites-Other_nf_input","Nf_activites-Qty_other_nfinput"],
-        "landscape_col": "Primary_details-landscape"
+        "columns": ["basic_info-Date","basic_info-block","basic_info-gp","basic_info-village","basic_info-name_water_source","discharge-Discarge","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
+        "landscape_col": "basic_info-village"
     },
     "2- Rejuvenation Works-Repairs": {
         "form_id": "2-Rejuvenation_works",
