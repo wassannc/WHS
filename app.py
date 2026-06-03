@@ -90,7 +90,7 @@ elif page in FORMS:
 
     config = FORMS[page]
 
-    df = load_odk_data(config["form_id"])
+    df = load_data(config["form_id"])
 
     if df.empty:
         st.warning("No data found")
