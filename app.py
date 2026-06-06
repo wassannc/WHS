@@ -26,7 +26,7 @@ if page == "Submission Matrix":
         df = load_data(config["form_id"])
         if df.empty:
             continue
-        submit_col = "enumerator-Enumerator_name"
+        submit_col = "enumerator-Jalamithra"
         if submit_col not in df.columns:
             continue
         df = df[df[submit_col].notna()]
