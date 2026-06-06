@@ -12,12 +12,12 @@ FORMS = {
     "2- Rejuvenation Works-Repairs": {
         "form_id": "2-Rejuvenation_works",
         "columns": ["SubmissionDate","table_list_pd-landscape","table_list_pd-brc_unit","table_list_pd-product_name","table_list_pd-brc_sale_date","table_list_pd-dj_sale_farmer","table_list_pd-gender","table_list_pd-sale_village","table_list_sd-sale_qty","table_list_sd-total_income","table_list_cd-crops","table_list_cd-crop_ext"],
-        "landscape_col": "table_list_pd-landscape"
+        "landscape_col": "basic_details_repairs-village"
     },
     "3-New Irrigation Sources": {
-        "form_id": "3-New Irrigation Sources",
-        "columns": ["SubmissionDate","table_list_pd-landscape","table_list_pd-gp","table_list_pd-village","table_list_pd1-farmer_name","table_list_pd1-processing_hub_tool","table_list_pd1-processing_date","table_list_pd1-processed_for","table_list_pd2-processing_farmer_village","table_list_pd2-processing_farmer","table_list_pd2-processing_qty_kgs","table_list_pd2-rent_amount","table_list_pd3-Data_sub_by"],
-        "landscape_col": "table_list_pd-landscape"
+        "form_id": "3.New Irrigation Sources",
+        "columns": ["new_irri_structr-block","new_irri_structr-gp","new_irri_structr-village","new_irri_structr-villages_under_proposed_system","new_irri_structr-Source_name","new_irri_structr-source_elevation","new_irri_structr-Ayacut_elevation","new_irri_structr-in_hieght","new_irri_structr-distance_proposed_site_to_ayacut_mtrs","new_irri_structr_-families_covered_under_irrigation","new_irri_structr_-total_land_village_acrs","new_irri_structr_-proposed_ayacut_acrs","enumerator-Jalamithra"],
+        "landscape_col": "new_irri_structr-village"
     },
     "4-New Farmpond": {
         "form_id": "4-New Farmpond",
