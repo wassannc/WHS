@@ -24,30 +24,14 @@ if page == "Submission Matrix":
     for form_name, config in FORMS.items():
 
         df = load_data(config["form_id"])
-
-        # DEBUG
-        st.write("FORM:", form_name)
-        st.write("Rows:", len(df))
-
         if df.empty:
-            st.write("No data returned")
             continue
-
         submit_col = "enumerator-Enumerator_name"
-
         if submit_col not in df.columns:
-            st.write(f"{form_name}: Enumerator column NOT found")
-            st.write(df.columns.tolist())
             continue
-
-        st.write(f"{form_name}: Enumerator column found")
-
-        st.write(
-            f"{form_name}: Non-empty names =",
-            df[submit_col].notna().sum()
-        )
-
         df = df[df[submit_col].notna()]
+        if df.empty:
+            continue
 
         if df.empty:
             st.write(f"{form_name}: All names are blank")
@@ -77,7 +61,6 @@ if page == "Submission Matrix":
             fill_value=0
         )
 
-        st.success("Matrix generated successfully")
         st.dataframe(matrix, use_container_width=True)
 
     else:
