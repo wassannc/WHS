@@ -8,7 +8,7 @@ FORMS = {
     "1.1 Water Discharge": {
         "form_id": "1.1 Discarge",
         "columns": ["basic_info-Date","basic_info-block","basic_info-gp","basic_info-village","basic_info-name_water_source","discharge-Discarge","enumerator-Jalamithra"],
-        "columns_labels": {"basic_info-Date": "date","basic_info-block": "Block","basic_info-gp": "GP","basic_info-village": "Village","basic_info-name_water_source": "Water source name","discharge-Discarge": "Discharge-Litrs/sec","enumerator-Jalamithra": "Jalamithra},
+        "columns_labels": {"basic_info-Date": "date","basic_info-block": "Block","basic_info-gp": "GP","basic_info-village": "Village","basic_info-name_water_source": "Water source name","discharge-Discarge": "Discharge-Litrs/sec","enumerator-Jalamithra": "Jalamithra"},
         "landscape_col": "basic_info-village"
     },
     "2- Rejuvenation Works-Repairs": {
