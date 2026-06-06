@@ -88,6 +88,8 @@ elif page in FORMS:
         ]
 
         df_filtered = df[available_cols]
+        column_labels = config.get("column_labels", {})
+        df_filtered = df_filtered.rename(columns=column_labels)
 
         st.dataframe(
             df_filtered,
