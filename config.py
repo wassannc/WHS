@@ -2,6 +2,7 @@ FORMS = {
     "1. Basic Information": {
         "form_id": "Basic_info",
         "columns": ["geo-district","geo-block","geo-gp","geo-village","Households-community","Households-total_hhs","Households-population","enumerator-Jalamithra"],
+        "column_labels": ["geo-district": "District","geo-block": "Block","geo-gp": "GP","geo-village": "Village","Households-community": "Community","Households-total_hhs": "Total HHs","Households-population": "Population","enumerator-Jalamithra": "Jalamithra"]
         "landscape_col": "geo-village"
     },
     "1.1 Water Discharge": {
