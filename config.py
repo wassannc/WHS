@@ -1,12 +1,12 @@
 FORMS = {
     "1. Basic Information": {
         "form_id": "Basic_info",
-        "columns": ["geo-district","geo-block","geo-gp","geo-village","Households-community","Households-total_hhs","Households-population","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
+        "columns": ["geo-district","geo-block","geo-gp","geo-village","Households-community","Households-total_hhs","Households-population","enumerator-Jalamithra"],
         "landscape_col": "geo-village"
     },
     "1.1 Water Discharge": {
         "form_id": "1.1 Discarge",
-        "columns": ["basic_info-Date","basic_info-block","basic_info-gp","basic_info-village","basic_info-name_water_source","discharge-Discarge","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
+        "columns": ["basic_info-Date","basic_info-block","basic_info-gp","basic_info-village","basic_info-name_water_source","discharge-Discarge","enumerator-Jalamithra"],
         "landscape_col": "basic_info-village"
     },
     "2- Rejuvenation Works-Repairs": {
@@ -31,7 +31,7 @@ FORMS = {
     },
     "6. Lead_statement": {
         "form_id": "6. Lead_statement",
-        "columns": ["lead_statement-block","lead_statement-gp","lead_statement-village","sand-plainroad_kms_from_Kothavala","sand-ghatroad_kms_from_Kothavalas","metal-plainroad_kms_mamidipalli_metal","metal-ghatroad_kms_mamidipalli_metal","ud-chc_equipmnt_hired_farmer","ud-chc_equipmnt_total_hours_used","stone-place_stone","enumerator-Enumerator_name","enumerator-Enumerator_mobile"],
+        "columns": ["lead_statement-block","lead_statement-gp","lead_statement-village","sand-plainroad_kms_from_Kothavala","sand-ghatroad_kms_from_Kothavalas","metal-plainroad_kms_mamidipalli_metal","metal-ghatroad_kms_mamidipalli_metal","ud-chc_equipmnt_hired_farmer","ud-chc_equipmnt_total_hours_used","stone-place_stone","enumerator-Jalamithra"],
         "landscape_col": "lead_statement-village"
     }
 }
