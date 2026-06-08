@@ -72,7 +72,7 @@ elif page in FORMS:
     st.title(f"📥 {page}")
 
     config = FORMS[page]
-    if page == "2. Rejuvenation Works":
+    if page == "2- Rejuvenation Works-Repairs":
         report_type = st.selectbox(
             "Select Rejuvenation Report",
             [
