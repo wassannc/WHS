@@ -92,7 +92,10 @@ elif page in FORMS:
                 "wsc"
             )
         elif report_type == "WC Works":
-            df = load_data("2.Rejuvenation_works-wc_")
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "wc"
+            )    
         elif report_type == "LTCB Works":
             df = load_data("2.Rejuvenation_works-ltcb_")
     else:
