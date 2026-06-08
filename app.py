@@ -69,7 +69,7 @@ if page == "Submission Matrix":
 
 elif page in FORMS:
 
-    st.title(f"📥 {page} Report")
+    st.title(f"📥 {page}")
 
     config = FORMS[page]
 
