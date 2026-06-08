@@ -84,7 +84,17 @@ elif page in FORMS:
         )
         st.write("Selected:", report_type)
         
-    df = load_data(config["form_id"])
+    if page == "2- Rejuvenation Works-Repairs":
+        if report_type == "Main Report":
+            df = load_data("2.Rejuvenation_works")
+        elif report_type == "WSC Works":
+            df = load_data("2.Rejuvenation_works-wsc_")
+        elif report_type == "WC Works":
+            df = load_data("2.Rejuvenation_works-wc_")
+        elif report_type == "LTCB Works":
+            df = load_data("2.Rejuvenation_works-ltcb_")
+    else:
+        df = load_data(config["form_id"])
 
     if df.empty:
         st.warning("No data found")
