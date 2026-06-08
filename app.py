@@ -72,7 +72,18 @@ elif page in FORMS:
     st.title(f"📥 {page}")
 
     config = FORMS[page]
-
+    if page == "2. Rejuvenation Works":
+        report_type = st.selectbox(
+            "Select Rejuvenation Report",
+            [
+                "Main Report",
+                "WSC Works",
+                "WC Works",
+                "LTCB Works"
+            ]
+        )
+        st.write("Selected:", report_type)
+        
     df = load_data(config["form_id"])
 
     if df.empty:
