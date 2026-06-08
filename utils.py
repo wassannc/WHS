@@ -26,3 +26,19 @@ def load_data(form_id):
     df = pd.read_csv(io.StringIO(response.text))
 
     return df
+def load_repeat_data(form_id, repeat_name):
+    url = (
+        f"{ODK_URL}/v1/projects/{PROJECT_ID}"
+        f"/forms/{form_id}.svc/Submissions.{repeat_name}"
+    )
+    response = requests.get(
+        url,
+        auth=(USERNAME, PASSWORD)
+    )
+    if response.status_code != 200:
+        st.error(f"{repeat_name}: {response.status_code}")
+        return pd.DataFrame()
+    data = response.json()
+    if "value" not in data:
+        return pd.DataFrame()
+    return pd.json_normalize(data["value"])
