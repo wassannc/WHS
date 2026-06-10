@@ -26,18 +26,18 @@ def load_data(form_id):
     df = pd.read_csv(io.StringIO(response.text))
 
     return df
-def load_repeat_data(form_id, repeat_name):
+def load_repeat_data(form_id, entity_url):
     url = (
         f"{ODK_URL}/v1/projects/{PROJECT_ID}"
-        f"/forms/{form_id}.svc/$metadata"
+        f"/forms/{form_id}.svc/{entity_url}"
     )
     response = requests.get(
         url,
         auth=(USERNAME, PASSWORD)
     )
-    st.text(response.text[:5000])
-    return pd.DataFrame()
-    
+    if response.status_code != 200:
+        st.error(f"{entity_url}: {response.status_code}")
+        return pd.DataFrame()
     data = response.json()
     if "value" not in data:
         return pd.DataFrame()
