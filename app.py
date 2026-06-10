@@ -115,6 +115,11 @@ elif page in FORMS:
                 "Submissions.wc.wc_"
             )  
             main_df = load_data("2.Rejuvenation_works")
+            st.write("WC columns:")
+            st.write(df.columns.tolist())
+            st.write("Parent columns:")
+            st.write(main_df.columns.tolist())
+            
             df = df.merge(
                 main_df[
                     [
