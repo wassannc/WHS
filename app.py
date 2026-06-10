@@ -99,7 +99,9 @@ elif page in FORMS:
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.wc.wc_"
-            )    
+            )  
+            st.write(df.columns.tolist())
+            st.write(df.head())
         elif report_type == "LTCB Works":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
