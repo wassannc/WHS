@@ -119,7 +119,8 @@ elif page in FORMS:
             st.write(df.columns.tolist())
             st.write("Parent columns:")
             st.write(main_df.columns.tolist())
-            
+            st.write([c for c in main_df.columns if "KEY" in c.upper()])
+            st.write([c for c in df.columns if "KEY" in c.upper()])
             df = df.merge(
                 main_df[
                     [
