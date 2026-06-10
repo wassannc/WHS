@@ -92,16 +92,44 @@ elif page in FORMS:
                 "2.Rejuvenation_works",
                 "Submissions.wsc.wsc_"
             )
-            st.write(df.columns.tolist())
-            st.write(df.head())
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="PARENT_KEY",
+                right_on="KEY",
+                how="left"
+            )
+            st.dataframe(df)
+                        
             
         elif report_type == "WC Works":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.wc.wc_"
             )  
-            st.write(df.columns.tolist())
-            st.write(df.head())
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="PARENT_KEY",
+                right_on="KEY",
+                how="left"
+            )
+            st.dataframe(df)
+            
         elif report_type == "LTCB Works":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
