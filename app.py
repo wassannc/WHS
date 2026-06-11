@@ -93,19 +93,9 @@ elif page in FORMS:
                 "Submissions.wsc.wsc_"
             )
             main_df = load_data("2.Rejuvenation_works")
-            df = df.merge(
-                main_df[
-                    [
-                        "KEY",
-                        "basic_details_repairs-village",
-                        "basic_details_repairs-gp",
-                        "basic_details_repairs-block"
-                    ]
-                ],
-                left_on="PARENT_KEY",
-                right_on="KEY",
-                how="left"
-            )
+            st.write(df.head())
+            # TEMPORARILY COMMENT MERGE
+            # df = df.merge(...)
             st.dataframe(df)
                         
             
@@ -115,26 +105,10 @@ elif page in FORMS:
                 "Submissions.wc.wc_"
             )  
             main_df = load_data("2.Rejuvenation_works")
-            st.write("WC columns:")
-            st.write(df.columns.tolist())
-            st.write("Parent columns:")
-            st.write(main_df.columns.tolist())
-            st.write([c for c in main_df.columns if "KEY" in c.upper()])
-            st.write([c for c in df.columns if "KEY" in c.upper()])
+            st.write(df.head())
+            st.write(df[["__Submissions-id"]].head())
+            st.write(main_df[["KEY"]].head())
             
-            df = df.merge(
-                main_df[
-                    [
-                        "KEY",
-                        "basic_details_repairs-village",
-                        "basic_details_repairs-gp",
-                        "basic_details_repairs-block"
-                    ]
-                ],
-                left_on="PARENT_KEY",
-                right_on="KEY",
-                how="left"
-            )
             st.dataframe(df)
             
         elif report_type == "LTCB Works":
