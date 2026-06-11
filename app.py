@@ -106,6 +106,20 @@ elif page in FORMS:
                 right_on="KEY",
                 how="left"
             )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "avg_length_wc_leak1",
+                    "avg_breadth_wc_leak1",
+                    "avg_depth_wc_leak1",
+                    "volume_leak1_wc"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()   
            
         elif report_type == "WC Works":
             df = load_repeat_data(
