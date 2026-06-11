@@ -127,6 +127,7 @@ elif page in FORMS:
                 how="left"
             )
             st.dataframe(df)
+            st.stop()
             
         elif report_type == "LTCB Works":
             df = load_repeat_data(
