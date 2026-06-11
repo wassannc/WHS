@@ -78,7 +78,8 @@ elif page in FORMS:
                 "Main Report",
                 "WSC Works",
                 "WC Works",
-                "LTCB Works"
+                "LTCB Works",
+                "Guidewall repair"
             ]
         )
         st.write("Selected:", report_type)
@@ -120,7 +121,42 @@ elif page in FORMS:
             ]
             st.dataframe(df)
             st.stop()   
-           
+
+        elif report_type == "Guidewall repair":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.gwr.gwr_"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "avg_length_gwr",
+                    "avg_breadth_gwr",
+                    "avg_height_gwr",
+                    "volume_guidewall_tobe_break",
+                    "volume_guidewall_tobe_constrn"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+            
         elif report_type == "WC Works":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
