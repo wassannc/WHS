@@ -158,7 +158,7 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
 
-        elif report_type == "Guidewall Bedjoint Leakage":
+        elif report_type == "Guidewall Bedjoint leakage":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.gwbjl.gwbjl_"
