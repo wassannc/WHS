@@ -160,7 +160,36 @@ elif page in FORMS:
                 "2.Rejuvenation_works",
                 "Submissions.ltcb.ltcb_"
             )
-    
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                         "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "canal_damaged_length_leak1",
+                    "canal_damaged_breadth_leak1",
+                    "cc_volume_ltcb_leak1",
+                    "cc_total_volume_ltcb",
+                    "area_tobe_clean_chipping_for_concrete"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+                        
     else:
         df = load_data(config["form_id"])
 
