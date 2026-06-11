@@ -93,22 +93,39 @@ elif page in FORMS:
                 "Submissions.wsc.wsc_"
             )
             main_df = load_data("2.Rejuvenation_works")
-            st.write(df.head())
-            # TEMPORARILY COMMENT MERGE
-            # df = df.merge(...)
-            st.dataframe(df)
-                        
-            
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+           
         elif report_type == "WC Works":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.wc.wc_"
             )  
             main_df = load_data("2.Rejuvenation_works")
-            st.write(df.head())
-            st.write(df[["__Submissions-id"]].head())
-            st.write(main_df[["KEY"]].head())
-            
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
             st.dataframe(df)
             
         elif report_type == "LTCB Works":
