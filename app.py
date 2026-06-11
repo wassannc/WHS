@@ -80,7 +80,8 @@ elif page in FORMS:
                 "WC Works",
                 "LTCB Works",
                 "Guidewall repair",
-                "Guidewall Bedjoint leakage"
+                "Guidewall Bedjoint leakage",
+                "New canal guidewall"
             ]
         )
         st.write("Selected:", report_type)
@@ -188,6 +189,42 @@ elif page in FORMS:
                     "leakage_canal_height_gwbjl_leak1",
                     "volume_cc_gwbjl_leak1",
                     "total_volume_gwbjl"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+
+        elif report_type == "New canal guidewall":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.ncg.ncg_"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "guidewalls_side",
+                    "guidewalls_nos_ncg",
+                    "length_ncg",
+                    "basement_soilwork_osncg",
+                    "volume_cc148_basement_concrete_osncg",
+                    "volume_cc136_to_make_canal_guidewalls_osncg"
                 ]
             ]
             st.dataframe(df)
