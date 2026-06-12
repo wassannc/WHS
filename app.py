@@ -372,7 +372,7 @@ elif page in FORMS:
             st.stop()
 
 
-    elif report_type == "Sluice gate":
+        elif report_type == "Sluice gate":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.slc_gt"
