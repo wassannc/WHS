@@ -212,6 +212,15 @@ elif page in FORMS:
                     "volume_so"
                 ]
             ]
+            df=df.rename(columns={
+                "basic_details_repairs-block": "Block",
+                "basic_details_repairs-gp": "GP",
+                "basic_details_repairs-village": "Village",
+                "avg_length_so": "Avg Length",
+                "avg_breadth_so": "Avg Breadth",
+                "avg_height_so": "Avg Height",
+                "volume_so": "Volume cubmtrs"
+            })
             st.dataframe(df)
             st.stop()
 
