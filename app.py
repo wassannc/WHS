@@ -83,7 +83,8 @@ elif page in FORMS:
                 "Guidewall Bedjoint leakage",
                 "New canal guidewall",
                 "Scourvent Opening",
-                "Leakage arrest"
+                "Leakage arrest",
+                "Canal guidewall height increase"
             ]
         )
         st.write("Selected:", report_type)
@@ -368,6 +369,42 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
                         
+    elif report_type == "Canal guidewall height increase":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.Canal_guidewall_height_increase.Canal_guidewall_height_increase_"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "canal_guidewall_height_increase_side",
+                    "guidewalls_nos_canal_guidewall_height_increase",
+                    "length_canal_guidewall_height_increase",
+                    "width_canal_guidewall_height_increase",
+                    "height_canal_guidewall_height_increase",
+                    "workdetails_canal_guidewall_height_increase"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+        
     else:
         df = load_data(config["form_id"])
 
