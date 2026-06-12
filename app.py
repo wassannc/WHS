@@ -406,6 +406,39 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
 
+    elif report_type == "Canal excuvation":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.ce"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "soiltype_ce",
+                    "canal_length_ce",
+                    "soil_work_to_dig_canal"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+        
     elif report_type == "Canal desiltation":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
@@ -431,12 +464,12 @@ elif page in FORMS:
                     "basic_details_repairs-block",
                     "basic_details_repairs-gp",
                     "basic_details_repairs-village",
-                    "soiltype_canal_desiltation",
-                    "canal_length_desiltation",
-                    "canal_top_breadth_filled_with_soil",
-                    "canal_bed_breadth_cd",
-                    "depth_soilsilt_cd",
-                    "volume_soil_tobe_removed_in_canal"
+                    "soiltype_cd",
+                    "canal_length_cd",
+                    "canal_upper_breadth_mathati_cd",
+                    "canalbed_breadth_cd",
+                    "soil_dunes_height_cd",
+                    "volume_soil_tobe_removed_canal_cd"
                 ]
             ]
             st.dataframe(df)
