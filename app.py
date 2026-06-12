@@ -125,6 +125,14 @@ elif page in FORMS:
                     "valve_size_vent1"
                 ]
             ]
+            df=df.rename(columns={
+                "basic_details_repairs-block": "Block",
+                "basic_details_repairs-gp": "GP",
+                "basic_details_repairs-village": "Village",
+                "vent1_wsc": "Vent1",
+                "hole_size_diameter_vent1": "Vent1 hole size-dia",
+                "valve_size_vent1": "Vent1 valve size"
+            })
             st.dataframe(df)
             st.stop()   
 
