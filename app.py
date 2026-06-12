@@ -81,7 +81,8 @@ elif page in FORMS:
                 "LTCB Works",
                 "Guidewall repair",
                 "Guidewall Bedjoint leakage",
-                "New canal guidewall"
+                "New canal guidewall",
+                "Scourvent Opening"
             ]
         )
         st.write("Selected:", report_type)
@@ -154,6 +155,40 @@ elif page in FORMS:
                     "avg_height_gwr",
                     "volume_guidewall_tobe_break",
                     "volume_guidewall_tobe_constrn"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+
+        elif report_type == "Scourvent opening":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.so.so"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "so-avg_length_so",
+                    "so-avg_breadth_so",
+                    "so-avg_height_so",
+                    "so-volume_so"
                 ]
             ]
             st.dataframe(df)
