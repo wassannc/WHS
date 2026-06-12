@@ -406,7 +406,7 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
 
-    elif report_type == "Canal excuvation":
+        elif report_type == "Canal excuvation":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.ce"
@@ -439,7 +439,7 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
         
-    elif report_type == "Canal desiltation":
+        elif report_type == "Canal desiltation":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.Canal_desiltation"
@@ -475,7 +475,7 @@ elif page in FORMS:
             st.dataframe(df)
             st.stop()
         
-    elif report_type == "Canal guidewall height increase":
+        elif report_type == "Canal guidewall height increase":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
                 "Submissions.Canal_guidewall_height_increase.Canal_guidewall_height_increase_"
