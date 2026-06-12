@@ -299,6 +299,15 @@ elif page in FORMS:
                     "volume_leak1_wc"
                 ]
             ]
+            df=df.rename(columns={
+                "basic_details_repairs-block": "Block",
+                "basic_details_repairs-gp": "GP",
+                "basic_details_repairs-village": "Village",
+                "avg_length_wc_leak1": "Avg Length-mtrs",
+                "avg_breadth_wc_leak1": "Avg Breadth-mtrs",
+                "avg_depth_wc_leak1": "Avg Depth-mtrs",
+                "volume_leak1_wc": "Total volume-cubmtrs"
+            })
             st.dataframe(df)
             st.stop()
             
