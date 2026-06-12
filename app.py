@@ -375,7 +375,7 @@ elif page in FORMS:
     elif report_type == "Sluice gate":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
-                "Submissions.slc_gt"
+                "Submissions.slc_gt.slc_gt"
             )  
             main_df = load_data("2.Rejuvenation_works")
             df = df.merge(
