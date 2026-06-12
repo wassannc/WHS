@@ -163,7 +163,7 @@ elif page in FORMS:
         elif report_type == "Scourvent opening":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
-                "Submissions.so.so"
+                "Submissions.so"
             )  
             main_df = load_data("2.Rejuvenation_works")
             df = df.merge(
