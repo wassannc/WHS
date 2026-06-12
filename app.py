@@ -84,6 +84,7 @@ elif page in FORMS:
                 "New canal guidewall",
                 "Scourvent Opening",
                 "Leakage arrest",
+                "Sluice gate",
                 "Canal guidewall height increase"
             ]
         )
@@ -368,7 +369,42 @@ elif page in FORMS:
             ]
             st.dataframe(df)
             st.stop()
-                        
+
+
+    elif report_type == "Sluice gate":
+            df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.slc_gt"
+            )  
+            main_df = load_data("2.Rejuvenation_works")
+            df = df.merge(
+                main_df[
+                    [
+                        "KEY",
+                        "basic_details_repairs-village",
+                        "basic_details_repairs-gp",
+                        "basic_details_repairs-block"
+                    ]
+                ],
+                left_on="__Submissions-id",
+                right_on="KEY",
+                how="left"
+            )
+            # SHOW ONLY REQUIRED COLUMNS
+            df = df[
+                [
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "sluice_gate",
+                    "sluice_gate_width",
+                    "sluice_gate_height",
+                    "sluice_gate_volume"
+                ]
+            ]
+            st.dataframe(df)
+            st.stop()
+        
     elif report_type == "Canal guidewall height increase":
             df = load_repeat_data(
                 "2.Rejuvenation_works",
