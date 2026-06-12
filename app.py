@@ -116,10 +116,9 @@ elif page in FORMS:
                     "basic_details_repairs-block",
                     "basic_details_repairs-gp",
                     "basic_details_repairs-village",
-                    "avg_length_wc_leak1",
-                    "avg_breadth_wc_leak1",
-                    "avg_depth_wc_leak1",
-                    "volume_leak1_wc"
+                    "vent1_wsc",
+                    "hole_size_diameter_vent1",
+                    "valve_size_vent1"
                 ]
             ]
             st.dataframe(df)
@@ -185,10 +184,10 @@ elif page in FORMS:
                     "basic_details_repairs-block",
                     "basic_details_repairs-gp",
                     "basic_details_repairs-village",
-                    "so-avg_length_so",
-                    "so-avg_breadth_so",
-                    "so-avg_height_so",
-                    "so-volume_so"
+                    "avg_length_so",
+                    "avg_breadth_so",
+                    "avg_height_so",
+                    "volume_so"
                 ]
             ]
             st.dataframe(df)
