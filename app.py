@@ -160,6 +160,16 @@ elif page in FORMS:
                     "volume_guidewall_tobe_constrn"
                 ]
             ]
+            df=df.rename(columns={
+                "basic_details_repairs-block": "Block",
+                "basic_details_repairs-gp": "GP",
+                "basic_details_repairs-village": "Village",
+                "avg_length_gwr": "Avg length-mtrs",
+                "avg_breadth_gwr": "Avg breadth-mtrs",
+                "avg_height_gwr": "Avg height-mtrs",
+                "volume_guidewall_tobe_break": "Volume- guidewall tobe break-cubmtrs",
+                "volume_guidewall_tobe_constrn": "Volume guidewall tobe constructed-cubmtrs"
+            })
             st.dataframe(df)
             st.stop()
 
