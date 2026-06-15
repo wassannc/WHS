@@ -26,6 +26,7 @@ FORMS = {
     "6. Lead_statement": {
         "form_id": "6. Lead_statement",
         "columns": ["lead_statement-block","lead_statement-gp","lead_statement-village","sand-plainroad_kms_from_Kothavala","sand-ghatroad_kms_from_Kothavalas","metal-plainroad_kms_mamidipalli_metal","metal-ghatroad_kms_mamidipalli_metal","ud-chc_equipmnt_hired_farmer","ud-chc_equipmnt_total_hours_used","stone-place_stone","enumerator-Jalamithra"],
+        "column_labels": {"lead_statement-block": "Block","lead_statement-gp": "GP","lead_statement-village": "Village","sand-plainroad_kms_from_Kothavala": "Distance from Kothavalasa for sand-km's","sand-ghatroad_kms_from_Kothavalas": "ghat KMs from Kothavalasa","metal-plainroad_kms_mamidipalli_metal": "Distance from Mamidipalli-metals","metal-ghatroad_kms_mamidipalli_metal": "Ghat Kms from Mamidipalli","stone-place_stone": "Place for stone","enumerator-Jalamithra": "Jalamithra"},
         "landscape_col": "lead_statement-village"
     }
 }
