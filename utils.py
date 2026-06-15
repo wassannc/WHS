@@ -14,7 +14,6 @@ def load_data(form_id):
     response = requests.get(url, auth=(USERNAME, PASSWORD))
 
     if response.status_code != 200:
-        st.error(f"Error: {response.status_code}")
         return pd.DataFrame()
 
     import io
@@ -36,7 +35,6 @@ def load_repeat_data(form_id, entity_url):
         auth=(USERNAME, PASSWORD)
     )
     if response.status_code != 200:
-        st.error(f"{entity_url}: {response.status_code}")
         return pd.DataFrame()
     data = response.json()
     if "value" not in data:
