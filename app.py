@@ -8,15 +8,15 @@ st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
 
-menu_items = ["Submission Matrix"] + list(FORMS.keys())
+menu_items = ["Form Submissions"] + list(FORMS.keys())
 
 page = st.sidebar.radio("Go to", menu_items)
 
-# ---------------- SUBMISSION MATRIX ----------------
+# ---------------- Form Submissions ----------------
 
-if page == "Submission Matrix":
+if page == "Form Submissions":
 
-    st.title("📊 Submission Matrix")
+    st.title("📊 Form Submissions")
 
     all_data = []
 
