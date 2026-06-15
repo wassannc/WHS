@@ -20,6 +20,7 @@ def load_data(form_id):
     import io
 
     if response.status_code != 200:
+        st.warning(f"{form_id} -> {response.status_code}")
         return pd.DataFrame()
 
     df = pd.read_csv(io.StringIO(response.text))
