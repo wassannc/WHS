@@ -12,11 +12,6 @@ page = st.sidebar.radio(
         *list(FORMS.keys())
     ]
 )
-st.sidebar.title("Menu")
-menu_items = ["Form Submissions"] + list(FORMS.keys())
-
-page = st.sidebar.radio("Go to", menu_items)
-
 # ---------------- Form Submissions ----------------
 
 if page == "Form Submissions":
