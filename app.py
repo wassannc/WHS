@@ -8,13 +8,13 @@ st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
 
-page = st.sidebar.radio(
-    "Select Form",
-    [
-        "Watershed Map",
-        *list(FORMS.keys())
-    ]
-)
+    page = st.sidebar.radio(
+        "Select Form",
+        [
+            "Watershed Map",
+            *list(FORMS.keys())
+        ]
+    )
 
 menu_items = ["Form Submissions"] + list(FORMS.keys())
 
