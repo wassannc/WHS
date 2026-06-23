@@ -5,7 +5,13 @@ from utils import load_data, load_repeat_data
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 # ---------------- SIDEBAR ----------------
-
+page = st.sidebar.radio(
+    "Select Form",
+    [
+        "Watershed Map",
+        *list(FORMS.keys())
+    ]
+)
 st.sidebar.title("Menu")
 menu_items = ["Form Submissions"] + list(FORMS.keys())
 
