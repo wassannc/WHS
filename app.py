@@ -64,18 +64,18 @@ if page == "Form Submissions":
 
     else:
         
-    elif page == "Watershed Map":
+        elif page == "Watershed Map":
 
-        st.title("🗺️ Watershed Map")
+            st.title("🗺️ Watershed Map")
 
-        with open("Mandal_Map.html", "r", encoding="utf-8") as f:
-            html_data = f.read()
+            with open("Mandal_Map.html", "r", encoding="utf-8") as f:
+                html_data = f.read()
 
-        st.components.v1.html(
-            html_data,
-            height=700,
-            scrolling=True
-        )
+            st.components.v1.html(
+                html_data,
+                height=700,
+                scrolling=True
+            )
 # ---------------- FORM REPORTS ----------------
 
 elif page in FORMS:
