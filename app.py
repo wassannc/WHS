@@ -8,10 +8,6 @@ st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 st.sidebar.title("Menu")
 
-menu_items = ["Form Submissions"] + list(FORMS.keys())
-
-page = st.sidebar.radio("Go to", menu_items)
-
 page = st.sidebar.radio(
     "Select Form",
     [
@@ -19,6 +15,10 @@ page = st.sidebar.radio(
         *list(FORMS.keys())
     ]
 )
+
+menu_items = ["Form Submissions"] + list(FORMS.keys())
+
+page = st.sidebar.radio("Go to", menu_items)
 
 # ---------------- Form Submissions ----------------
 
