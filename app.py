@@ -12,6 +12,14 @@ menu_items = ["Form Submissions"] + list(FORMS.keys())
 
 page = st.sidebar.radio("Go to", menu_items)
 
+page = st.sidebar.radio(
+    "Select Form",
+    [
+        "Watershed Map",
+        *list(FORMS.keys())
+    ]
+)
+
 # ---------------- Form Submissions ----------------
 
 if page == "Form Submissions":
