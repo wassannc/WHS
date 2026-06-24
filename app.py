@@ -81,7 +81,15 @@ elif page == "AHT Map":
     m = folium.Map(
         location=[18.3, 82.8],   # temporary center
         zoom_start=11
+        tiles=None
     )
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri",
+        name="Satellite",
+        overlay=False,
+        control=True
+    ).add_to(m)
 
     with open("Villages.geojson", "r", encoding="utf-8") as f:
         villages = json.load(f)
