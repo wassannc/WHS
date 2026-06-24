@@ -66,7 +66,7 @@ if page == "Form Submissions":
         
         elif page == "Watershed Map":
 
-            st.title("🗺️ Watershed Map")
+        st.title("🗺️ Watershed Map")
 
             with open("Mandal_Map.html", "r", encoding="utf-8") as f:
                 html_data = f.read()
