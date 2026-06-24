@@ -67,7 +67,7 @@ elif page == "AHT Map":
 
     st.title("🗺️ AHT Map")
 
-    with open("Mandal_Map.html", "r", encoding="utf-8") as f:
+    with open("AHT_Map.html", "r", encoding="utf-8") as f:
         html_data = f.read()
 
     st.components.v1.html(
