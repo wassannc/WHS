@@ -76,15 +76,25 @@ if page == "Form Submissions":
         
 elif page == "AHT Map":
 
-    st.title("🗺️ AHT Map")
+    st.title("🗺️ AHT Village Map")
 
-    with open("AHT_Map.html", "r", encoding="utf-8") as f:
-        html_data = f.read()
+    m = folium.Map(
+        location=[18.3, 82.8],   # temporary center
+        zoom_start=11
+    )
 
-    st.components.v1.html(
-        html_data,
-        height=700,
-        scrolling=True
+    with open("All_Villages.geojson", "r", encoding="utf-8") as f:
+        villages = json.load(f)
+
+    folium.GeoJson(
+        villages,
+        name="Villages"
+    ).add_to(m)
+
+    st_folium(
+        m,
+        width=1200,
+        height=700
     )
 # ---------------- FORM REPORTS ----------------
 
