@@ -5,14 +5,22 @@ from utils import load_data, load_repeat_data
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
 # ---------------- SIDEBAR ----------------
-page = st.sidebar.radio(
-    "Select Form",
-    [
-        "Form Submissions",
-        "AHT Map",
-        *list(FORMS.keys())
-    ]
+main_menu = st.sidebar.radio(
+    "Menu",
+    ["📊 Reports", "🗺️ Maps"]
 )
+
+if main_menu == "🗺️ Maps":
+    page = st.sidebar.radio(
+        "Select Map",
+        ["AHT Map"]
+    )
+
+elif main_menu == "📊 Reports":
+    page = st.sidebar.radio(
+        "Select Report",
+        ["Form Submissions"] + list(FORMS.keys())
+    )
 # ---------------- Form Submissions ----------------
 
 if page == "Form Submissions":
