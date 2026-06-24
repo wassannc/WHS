@@ -83,7 +83,7 @@ elif page == "AHT Map":
         zoom_start=11
     )
 
-    with open("All_Villages.geojson", "r", encoding="utf-8") as f:
+    with open("Villages.geojson", "r", encoding="utf-8") as f:
         villages = json.load(f)
 
     folium.GeoJson(
