@@ -80,7 +80,7 @@ elif page == "AHT Map":
 
     m = folium.Map(
         location=[18.3, 82.8],   # temporary center
-        zoom_start=11
+        zoom_start=11,
         tiles=None
     )
     folium.TileLayer(
