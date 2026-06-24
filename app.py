@@ -8,7 +8,8 @@ st.set_page_config(page_title="Project Dashboard", layout="wide")
 page = st.sidebar.radio(
     "Select Form",
     [
-        "Watershed Map",
+        "Form Submissions",
+        "AHT Map",
         *list(FORMS.keys())
     ]
 )
@@ -62,9 +63,9 @@ if page == "Form Submissions":
 
         st.dataframe(matrix, use_container_width=True)
         
-elif page == "Watershed Map":
+elif page == "AHT Map":
 
-    st.title("🗺️ Watershed Map")
+    st.title("🗺️ AHT Map")
 
     with open("Mandal_Map.html", "r", encoding="utf-8") as f:
         html_data = f.read()
