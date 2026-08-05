@@ -1,4 +1,4 @@
-import streamlit==1.49.1 as st
+import streamlit as st
 import pandas as pd
 from config import FORMS
 from utils import load_data, load_repeat_data
