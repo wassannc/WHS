@@ -23,7 +23,7 @@ FORMS = {
         "column_labels": {"SubmissionDate": "Date","basic_details_repairs-block": "Block","basic_details_repairs-gp": "GP","basic_details_repairs-village": "Village","checkdam_repairs": "Repairs in this structure"},
         "landscape_col": "basic_details_repairs-village"
     },
-    "3-New Irrigation Sources": {
+    "3-New Irrigation": {
         "form_id": "3.New Irrigation Sources",
         "columns": ["new_irri_structr-block","new_irri_structr-gp","new_irri_structr-village","new_irri_structr-villages_under_proposed_system","new_irri_structr-Source_name","new_irri_structr-source_elevation","new_irri_structr-Ayacut_elevation","new_irri_structr-in_hieght","new_irri_structr-distance_proposed_site_to_ayacut_mtrs","new_irri_structr_-families_covered_under_irrigation","new_irri_structr_-total_land_village_acrs","new_irri_structr_-proposed_ayacut_acrs","enumerator-Jalamithra"],
         "column_labels": {"new_irri_structr-block": "Block","new_irri_structr-gp": "GP","new_irri_structr-village": "Village","new_irri_structr-villages_under_proposed_system": "No of villages covered","new_irri_structr-Source_name": "Water source","new_irri_structr-source_elevation": "Elevation of source","new_irri_structr-Ayacut_elevation": "elevation of ayacut","new_irri_structr-in_hieght": "Which is in height","new_irri_structr-distance_proposed_site_to_ayacut_mtrs": "Distance- site to ayacut/meters","new_irri_structr_-families_covered_under_irrigation": "Families covered","new_irri_structr_-total_land_village_acrs": "Total village land-acres","new_irri_structr_-proposed_ayacut_acrs": "Proposed ayacut-acres","enumerator-Jalamithra": "Jalamithra"},
