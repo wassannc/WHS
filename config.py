@@ -1,6 +1,6 @@
 FORMS = {
     "Preliminary_assessment": {
-        "form_id": "Preliminary_assessment",
+        "form_id": "Preliminary_assmnt",
         "columns": ["geo-district","geo-block","geo-gp","geo-village","geo-village_gps","pa-work","pa-water_storage_months","pa-gps","pa-total_hhs","pa-pvtg_hhs","pa-irrigated_hhs","pa-irrigated_acres","pa-pipeline_suitable","pa-checkdam","pa-applied_for_grant","pa-applied_in","pa-working_ngo","pa-ngo","pa-grazing","pa-contribution","pa-irrigated_ext_rabi","pa-need_to_work","pa-village_person_name","pa-village_person_phone","pa-survey_by"],
         "column_labels": {"geo-district": "District","geo-block": "Block","geo-gp": "GP","geo-village": "village","geo-village_gps": "Village GPS","pa-work": "Type of work","pa-water_storage_months": "No.of months water will store","pa-gps": "Structure GPS","pa-total_hhs": "Total HHs","pa-pvtg_hhs": "PVTG HHs","pa-irrigated_hhs": "HHs undedr irrigation","pa-irrigated_acres": "Present irrigated area","pa-pipeline_suitable": "Suitable for pipeline","pa-checkdam": "Checkdam available","pa-applied_for_grant": "Applied for grant","pa-applied_in": "Applied in","pa-working_ngo": "Working NGO","pa-ngo": "NGO name","pa-grazing": "Grazing type","pa-contribution": "Community ready contribution","pa-irrigated_ext_rabi": "Irrigated extent in Rabi","pa-need_to_work": "Need to work","pa-village_person_name": "Name of the Village cont person","pa-village_person_phone": "Phone no","pa-survey_by": "Survey by"},
         "landscape_col": "geo-village"
