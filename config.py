@@ -18,7 +18,7 @@ FORMS = {
         "landscape_col": "basic_info-village"
     },
     "2- Rejuvenation Works": {
-        "form_id": "2-Rejuvenation_works",
+        "form_id": "2.Rejuvenation_works",
         "columns": ["SubmissionDate","basic_details_repairs-block","basic_details_repairs-gp","basic_details_repairs-village","checkdam_repairs"],
         "column_labels": {"SubmissionDate": "Date","basic_details_repairs-block": "Block","basic_details_repairs-gp": "GP","basic_details_repairs-village": "Village","checkdam_repairs": "Repairs in this structure"},
         "landscape_col": "basic_details_repairs-village"
