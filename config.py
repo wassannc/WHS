@@ -17,7 +17,7 @@ FORMS = {
         "column_labels": {"basic_info-Date": "Date","basic_info-block": "Block","basic_info-gp": "GP","basic_info-village": "Village","basic_info-name_water_source": "Water source name","discharge-Discarge": "Discharge-Litrs/sec","enumerator-Jalamithra": "Jalamithra"},
         "landscape_col": "basic_info-village"
     },
-    "2- Rejuvenation Works": {
+    "2. Rejuvenation Works": {
         "form_id": "2.Rejuvenation_works",
         "columns": ["SubmissionDate","basic_details_repairs-block","basic_details_repairs-gp","basic_details_repairs-village","checkdam_repairs"],
         "column_labels": {"SubmissionDate": "Date","basic_details_repairs-block": "Block","basic_details_repairs-gp": "GP","basic_details_repairs-village": "Village","checkdam_repairs": "Repairs in this structure"},
