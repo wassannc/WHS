@@ -270,7 +270,7 @@ elif page in FORMS:
                         use_container_width=True
                     )
         
-    else:
+    elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
 
     if df.empty:
