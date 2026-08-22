@@ -171,14 +171,22 @@ elif page in FORMS:
         # REPAIR TYPES PRESENT IN THIS VILLAGE
         # -----------------------------------------
 
-        repair_types = (
-            village_df["checkdam_repairs"]
-            .dropna()
-            .astype(str)
-            .str.strip()
-            .unique()
-            .tolist()
-        )
+        # -----------------------------------------
+        # GET INDIVIDUAL REPAIR TYPES
+        # -----------------------------------------
+
+        repair_types = []
+
+        for value in village_df["checkdam_repairs"].dropna():
+
+            value = str(value).strip()
+
+            if value:
+                parts = value.split()
+
+                for repair in parts:
+                    if repair not in repair_types:
+                        repair_types.append(repair)
 
         st.write("Repair types found:", repair_types)
         st.stop()
