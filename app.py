@@ -273,31 +273,31 @@ elif page in FORMS:
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
 
-    if df.empty:
-        st.warning("No data found")
+        if df.empty:
+            st.warning("No data found")
 
-    else:
+        else:
 
-        # Select required columns
-        columns = config.get("columns", [])
+            # Select required columns
+            columns = config.get("columns", [])
 
-        available_cols = [
-            col for col in columns if col in df.columns
-        ]
+            available_cols = [
+                col for col in columns if col in df.columns
+            ]
 
-        df_filtered = df[available_cols]
-        column_labels = config.get("column_labels", {})
-        df_filtered = df_filtered.rename(columns=column_labels)
+            df_filtered = df[available_cols]
+            column_labels = config.get("column_labels", {})
+            df_filtered = df_filtered.rename(columns=column_labels)
 
-        st.dataframe(
-            df_filtered,
-            use_container_width=True
-        )
+            st.dataframe(
+                df_filtered,
+                use_container_width=True
+            )
 
-        # Download button
-        st.download_button(
-            label="⬇ Download CSV",
-            data=df_filtered.to_csv(index=False),
-            file_name=f"{page}_report.csv",
-            mime="text/csv"
-        )
+            # Download button
+            st.download_button(
+                label="⬇ Download CSV",
+                data=df_filtered.to_csv(index=False),
+                file_name=f"{page}_report.csv",
+                mime="text/csv"
+            )
