@@ -113,14 +113,20 @@ elif page in FORMS:
     config = FORMS[page]
     if page == "2.Rejuvenation_works":
 
-        # Load main rejuvenation submissions
+        # -----------------------------------------
+        # LOAD MAIN REJUVENATION DATA
+        # -----------------------------------------
+
         main_df = load_data("2.Rejuvenation_works")
 
         if main_df.empty:
             st.warning("No rejuvenation data found")
             st.stop()
 
-        # Get village list
+        # -----------------------------------------
+        # VILLAGE FILTER
+        # -----------------------------------------
+
         villages = (
             main_df["basic_details_repairs-village"]
             .dropna()
@@ -132,35 +138,49 @@ elif page in FORMS:
 
         villages = sorted(villages)
 
-        # Village filter
         selected_village = st.selectbox(
             "Select Village",
             villages
         )
 
-        # Filter main submissions by village
+        # -----------------------------------------
+        # FILTER MAIN TABLE BY VILLAGE
+        # -----------------------------------------
+
         village_df = main_df[
-            main_df["basic_details_repairs-village"].astype(str).str.strip()
+            main_df["basic_details_repairs-village"]
+            .astype(str)
+            .str.strip()
             == selected_village
         ].copy()
 
         st.write("Selected Village:", selected_village)
 
-        # Show main records for selected village
-        st.dataframe(
-            village_df[
-                [
-                    "SubmissionDate",
-                    "basic_details_repairs-block",
-                    "basic_details_repairs-gp",
-                    "basic_details_repairs-village",
-                    "checkdam_repairs"
-                ]
-            ],
-            use_container_width=True
+        # -----------------------------------------
+        # BASIC VILLAGE INFORMATION
+        # -----------------------------------------
+
+        if not village_df.empty:
+
+            st.write(
+                f"**Block:** {village_df['basic_details_repairs-block'].iloc[0]}   "
+                f"**GP:** {village_df['basic_details_repairs-gp'].iloc[0]}"
+            )
+
+        # -----------------------------------------
+        # REPAIR TYPES PRESENT IN THIS VILLAGE
+        # -----------------------------------------
+
+        repair_types = (
+            village_df["checkdam_repairs"]
+            .dropna()
+            .astype(str)
+            .str.strip()
+            .unique()
+            .tolist()
         )
 
-        st.stop()
+        st.write("Repair types found:", repair_types)
         
     if page == "2.Rejuvenation_works":
         if report_type == "Main Report":
