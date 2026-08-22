@@ -112,24 +112,55 @@ elif page in FORMS:
 
     config = FORMS[page]
     if page == "2.Rejuvenation_works":
-        report_type = st.selectbox(
-            "Select Rejuvenation Report",
-            [
-                "Main Report",
-                "WSC Works",
-                "WC Works",
-                "LTCB Works",
-                "Guidewall repair",
-                "Guidewall Bedjoint leakage",
-                "New canal guidewall",
-                "Scourvent Opening",
-                "Leakage arrest",
-                "Sluice gate",
-                "Canal desiltation",
-                "Canal guidewall height increase"
-            ]
+
+        # Load main rejuvenation submissions
+        main_df = load_data("2.Rejuvenation_works")
+
+        if main_df.empty:
+            st.warning("No rejuvenation data found")
+            st.stop()
+
+        # Get village list
+        villages = (
+            main_df["basic_details_repairs-village"]
+            .dropna()
+            .astype(str)
+            .str.strip()
+            .unique()
+            .tolist()
         )
-        st.write("Selected:", report_type)
+
+        villages = sorted(villages)
+
+        # Village filter
+        selected_village = st.selectbox(
+            "Select Village",
+            villages
+        )
+
+        # Filter main submissions by village
+        village_df = main_df[
+            main_df["basic_details_repairs-village"].astype(str).str.strip()
+            == selected_village
+        ].copy()
+
+        st.write("Selected Village:", selected_village)
+
+        # Show main records for selected village
+        st.dataframe(
+            village_df[
+                [
+                    "SubmissionDate",
+                    "basic_details_repairs-block",
+                    "basic_details_repairs-gp",
+                    "basic_details_repairs-village",
+                    "checkdam_repairs"
+                ]
+            ],
+            use_container_width=True
+        )
+
+        st.stop()
         
     if page == "2.Rejuvenation_works":
         if report_type == "Main Report":
