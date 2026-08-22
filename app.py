@@ -188,8 +188,87 @@ elif page in FORMS:
                     if repair not in repair_types:
                         repair_types.append(repair)
 
-        st.write("Repair types found:", repair_types)
-        st.stop()
+        # -----------------------------------------
+        # GUIDE WALL REPAIR
+        # -----------------------------------------
+
+        if "Guide_wall_repair" in repair_types:
+
+            st.subheader("🔧 Guidewall Repair")
+
+            # Load Guidewall repeat table
+            gwr_df = load_repeat_data(
+                "2.Rejuvenation_works",
+                "Submissions.gwr.gwr_"
+            )
+
+            if gwr_df.empty:
+                st.info("No Guidewall repair records found.")
+            else:
+
+                # Link repeat records to main submissions
+                gwr_df = gwr_df.merge(
+                    main_df[
+                        [
+                            "KEY",
+                            "basic_details_repairs-village",
+                            "basic_details_repairs-gp",
+                            "basic_details_repairs-block"
+                        ]
+                    ],
+                    left_on="__Submissions-id",
+                    right_on="KEY",
+                    how="left"
+                )
+
+                # Filter to selected village
+                gwr_village_df = gwr_df[
+                    gwr_df["basic_details_repairs-village"]
+                    .astype(str)
+                    .str.strip()
+                    == selected_village
+                ].copy()
+
+                if gwr_village_df.empty:
+                    st.info(
+                        f"No Guidewall repair data found for {selected_village}."
+                    )
+                else:
+
+                    # Select required columns
+                    gwr_village_df = gwr_village_df[
+                        [
+                            "basic_details_repairs-block",
+                            "basic_details_repairs-gp",
+                            "basic_details_repairs-village",
+                            "avg_length_gwr",
+                            "avg_breadth_gwr",
+                            "avg_height_gwr",
+                            "volume_guidewall_tobe_break",
+                            "volume_guidewall_tobe_constrn"
+                        ]
+                    ]
+
+                    # Rename columns
+                    gwr_village_df = gwr_village_df.rename(
+                        columns={
+                            "basic_details_repairs-block": "Block",
+                            "basic_details_repairs-gp": "GP",
+                            "basic_details_repairs-village": "Village",
+                            "avg_length_gwr": "Avg Length-mtrs",
+                            "avg_breadth_gwr": "Avg Breadth-mtrs",
+                            "avg_height_gwr": "Avg Height-mtrs",
+                            "volume_guidewall_tobe_break":
+                                "Volume guidewall to be break-cubmtrs",
+                            "volume_guidewall_tobe_constrn":
+                                "Volume guidewall to be constructed-cubmtrs"
+                        }
+                     )
+
+                    st.dataframe(
+                        gwr_village_df,
+                        use_container_width=True
+                    )
         
     else:
         df = load_data(config["form_id"])
