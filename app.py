@@ -181,51 +181,6 @@ elif page in FORMS:
         )
 
         st.write("Repair types found:", repair_types)
-        
-    if page == "2.Rejuvenation_works":
-        if report_type == "Main Report":
-            df = load_data("2.Rejuvenation_works")
-            
-        elif report_type == "WSC Works":
-            df = load_repeat_data(
-                "2.Rejuvenation_works",
-                "Submissions.wsc.wsc_"
-            )
-            main_df = load_data("2.Rejuvenation_works")
-            df = df.merge(
-                main_df[
-                    [
-                        "KEY",
-                        "basic_details_repairs-village",
-                        "basic_details_repairs-gp",
-                        "basic_details_repairs-block"
-                    ]
-                ],
-                left_on="__Submissions-id",
-                right_on="KEY",
-                how="left"
-            )
-            # SHOW ONLY REQUIRED COLUMNS
-            df = df[
-                [
-                    "basic_details_repairs-block",
-                    "basic_details_repairs-gp",
-                    "basic_details_repairs-village",
-                    "vent1_wsc",
-                    "hole_size_diameter_vent1",
-                    "valve_size_vent1"
-                ]
-            ]
-            df=df.rename(columns={
-                "basic_details_repairs-block": "Block",
-                "basic_details_repairs-gp": "GP",
-                "basic_details_repairs-village": "Village",
-                "vent1_wsc": "Vent1",
-                "hole_size_diameter_vent1": "Vent1 hole size-dia",
-                "valve_size_vent1": "Vent1 valve size"
-            })
-            st.dataframe(df)
-            st.stop()   
 
         elif report_type == "Guidewall repair":
             df = load_repeat_data(
