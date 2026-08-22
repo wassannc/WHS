@@ -181,6 +181,7 @@ elif page in FORMS:
         )
 
         st.write("Repair types found:", repair_types)
+        st.stop()
         
     else:
         df = load_data(config["form_id"])
