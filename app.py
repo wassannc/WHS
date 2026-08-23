@@ -355,6 +355,90 @@ elif page in FORMS:
                                 ncg_village_df,
                                 use_container_width=True
                             )
+                # -----------------------------------------
+                # CANAL GUIDEWALL HEIGHT INCREASE
+                # -----------------------------------------
+                
+                if "Canal_guidewall_height_increase" in repair_types:
+                
+                    st.subheader("📏 Canal Guidewall Height Increase")
+                
+                    # Load repeat table
+                    cghi_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.Canal_guidewall_height_increase.Canal_guidewall_height_increase_"
+                    )
+                
+                    if cghi_df.empty:
+                        st.info("No Canal Guidewall Height Increase records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        cghi_df = cghi_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        cghi_village_df = cghi_df[
+                            cghi_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if cghi_village_df.empty:
+                
+                            st.info(
+                                f"No Canal Guidewall Height Increase data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select required columns
+                            cghi_village_df = cghi_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "canal_guidewall_height_increase_side",
+                                    "guidewalls_nos_canal_guidewall_height_increase",
+                                    "length_canal_guidewall_height_increase",
+                                    "width_canal_guidewall_height_increase",
+                                    "height_canal_guidewall_height_increase",
+                                    "workdetails_canal_guidewall_height_increase"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            cghi_village_df = cghi_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "canal_guidewall_height_increase_side": "Side",
+                                    "guidewalls_nos_canal_guidewall_height_increase": "No.",
+                                    "length_canal_guidewall_height_increase": "Length-mtrs",
+                                    "width_canal_guidewall_height_increase": "Width-mtrs",
+                                    "height_canal_guidewall_height_increase": "Height-mtrs",
+                                    "workdetails_canal_guidewall_height_increase": "Work details"
+                                }
+                            )
+                
+                            st.dataframe(
+                                cghi_village_df,
+                                use_container_width=True
+                            )        
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
