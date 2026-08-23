@@ -918,6 +918,118 @@ elif page in FORMS:
                                 wsc_village_df,
                                 use_container_width=True
                             )
+                # -----------------------------------------
+                # SURPLUS LEAKAGES
+                # -----------------------------------------
+                
+                if "Surplus_leakages" in repair_types:
+                
+                    st.subheader("🛠️ Surplus Leakages")
+                
+                    sl_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.surplus_leakage_tank.surplus_leakage_tank_"
+                    )
+                
+                    if sl_df.empty:
+                
+                        st.info("No Surplus Leakage records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submission
+                        sl_df = sl_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        sl_village_df = sl_df[
+                            sl_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if sl_village_df.empty:
+                
+                            st.info(
+                                f"No Surplus Leakage data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select only relevant engineering fields
+                            sl_village_df = sl_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                
+                                    "chainage_surplus_leakage_tank",
+                
+                                    "removing_loose_with_chipping_avg_length_lk1",
+                                    "removing_loose_with_chipping_avg_breadth_lk1",
+                                    "removing_loose_with_chipping_area_lk1",
+                
+                                    "cc124_required_tostop_avg_length_leak1",
+                                    "cc124_required_tostop_avg_breadth_leak1",
+                                    "cc124_required_tostop_avg_height_leak1",
+                
+                                    "cc124_volume_tostop_leakage1",
+                                    "cc124_total_volume_tostop_leakge"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            sl_village_df = sl_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                
+                                    "chainage_surplus_leakage_tank":
+                                        "Chainage",
+                
+                                    "removing_loose_with_chipping_avg_length_lk1":
+                                        "Chipping Avg Length-mtrs",
+                
+                                    "removing_loose_with_chipping_avg_breadth_lk1":
+                                        "Chipping Avg Breadth-mtrs",
+                
+                                    "removing_loose_with_chipping_area_lk1":
+                                        "Chipping Area-sq.mtrs",
+                
+                                    "cc124_required_tostop_avg_length_leak1":
+                                        "CC Avg Length-mtrs",
+                
+                                    "cc124_required_tostop_avg_breadth_leak1":
+                                        "CC Avg Breadth-mtrs",
+                
+                                    "cc124_required_tostop_avg_height_leak1":
+                                        "CC Avg Height-mtrs",
+                
+                                    "cc124_volume_tostop_leakage1":
+                                        "CC Volume-cubmtrs",
+                
+                                    "cc124_total_volume_tostop_leakge":
+                                        "Total CC Volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                sl_village_df,
+                                use_container_width=True
+                            )
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
