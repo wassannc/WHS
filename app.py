@@ -840,6 +840,84 @@ elif page in FORMS:
                                 so_village_df,
                                 use_container_width=True
                             )
+                # -----------------------------------------
+                # WATER SUPPLY CONTROL
+                # -----------------------------------------
+                
+                if "Water_supply_control" in repair_types:
+                
+                    st.subheader("🚰 Water Supply Control")
+                
+                    wsc_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.wsc.wsc_"
+                    )
+                
+                    if wsc_df.empty:
+                
+                        st.info("No Water Supply Control records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submission
+                        wsc_df = wsc_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        wsc_village_df = wsc_df[
+                            wsc_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if wsc_village_df.empty:
+                
+                            st.info(
+                                f"No Water Supply Control data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select only useful engineering fields
+                            wsc_village_df = wsc_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "vent1_wsc",
+                                    "hole_size_diameter_vent1",
+                                    "valve_size_vent1"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            wsc_village_df = wsc_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "vent1_wsc": "Vent",
+                                    "hole_size_diameter_vent1": "Hole size-dia",
+                                    "valve_size_vent1": "Valve size"
+                                }
+                            )
+                
+                            st.dataframe(
+                                wsc_village_df,
+                                use_container_width=True
+                            )
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
