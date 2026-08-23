@@ -438,7 +438,86 @@ elif page in FORMS:
                             st.dataframe(
                                 cghi_village_df,
                                 use_container_width=True
-                            )        
+                            )
+                # -----------------------------------------
+                # WEARING COAT
+                # -----------------------------------------
+                
+                if "Wearing_coat" in repair_types:
+                
+                    st.subheader("🛣️ Wearing Coat")
+                
+                    wc_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.wc.wc_"
+                    )
+                
+                    if wc_df.empty:
+                        st.info("No Wearing Coat records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        wc_df = wc_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        wc_village_df = wc_df[
+                            wc_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if wc_village_df.empty:
+                
+                            st.info(
+                                f"No Wearing Coat data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select required columns
+                            wc_village_df = wc_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "avg_length_wc_leak1",
+                                    "avg_breadth_wc_leak1",
+                                    "avg_depth_wc_leak1",
+                                    "volume_leak1_wc"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            wc_village_df = wc_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "avg_length_wc_leak1": "Avg Length-mtrs",
+                                    "avg_breadth_wc_leak1": "Avg Breadth-mtrs",
+                                    "avg_depth_wc_leak1": "Avg Depth-mtrs",
+                                    "volume_leak1_wc": "Total Volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                wc_village_df,
+                                use_container_width=True
+                            )    
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
