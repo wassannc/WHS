@@ -270,91 +270,91 @@ elif page in FORMS:
                         use_container_width=True
                     )
                 # -----------------------------------------
-# NEW CANAL GUIDEWALL
-# -----------------------------------------
+                # NEW CANAL GUIDEWALL
+                # -----------------------------------------
 
-if "New_canal_guidewall" in repair_types:
-
-    st.subheader("🏗️ New Canal Guidewall")
-
-    # Load repeat table
-    ncg_df = load_repeat_data(
-        "2.Rejuvenation_works",
-        "Submissions.ncg.ncg_"
-    )
-
-    if ncg_df.empty:
-        st.info("No New Canal Guidewall records found.")
-
-    else:
-
-        # Link repeat records to main submissions
-        ncg_df = ncg_df.merge(
-            main_df[
-                [
-                    "KEY",
-                    "basic_details_repairs-village",
-                    "basic_details_repairs-gp",
-                    "basic_details_repairs-block"
-                ]
-            ],
-            left_on="__Submissions-id",
-            right_on="KEY",
-            how="left"
-        )
-
-        # Filter selected village
-        ncg_village_df = ncg_df[
-            ncg_df["basic_details_repairs-village"]
-            .astype(str)
-            .str.strip()
-            == selected_village
-        ].copy()
-
-        if ncg_village_df.empty:
-
-            st.info(
-                f"No New Canal Guidewall data found for {selected_village}."
-            )
-
-        else:
-
-            # Select required columns
-            ncg_village_df = ncg_village_df[
-                [
-                    "basic_details_repairs-block",
-                    "basic_details_repairs-gp",
-                    "basic_details_repairs-village",
-                    "guidewalls_side",
-                    "guidewalls_nos_ncg",
-                    "length_ncg",
-                    "basement_soilwork_osncg",
-                    "volume_cc148_basement_concrete_osncg",
-                    "volume_cc136_to_make_canal_guidewalls_osncg"
-                ]
-            ]
-
-            # Rename columns
-            ncg_village_df = ncg_village_df.rename(
-                columns={
-                    "basic_details_repairs-block": "Block",
-                    "basic_details_repairs-gp": "GP",
-                    "basic_details_repairs-village": "Village",
-                    "guidewalls_side": "Side",
-                    "guidewalls_nos_ncg": "No.",
-                    "length_ncg": "Length-mtrs",
-                    "basement_soilwork_osncg": "Basement soil work",
-                    "volume_cc148_basement_concrete_osncg":
-                        "Basement concrete volume-cubmtrs",
-                    "volume_cc136_to_make_canal_guidewalls_osncg":
-                        "Canal guidewall volume-cubmtrs"
-                }
-            )
-
-            st.dataframe(
-                ncg_village_df,
-                use_container_width=True
-            )
+                if "New_canal_guidewall" in repair_types:
+                
+                    st.subheader("🏗️ New Canal Guidewall")
+                
+                    # Load repeat table
+                    ncg_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.ncg.ncg_"
+                    )
+                
+                    if ncg_df.empty:
+                        st.info("No New Canal Guidewall records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        ncg_df = ncg_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        ncg_village_df = ncg_df[
+                            ncg_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if ncg_village_df.empty:
+                
+                            st.info(
+                                f"No New Canal Guidewall data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select required columns
+                            ncg_village_df = ncg_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "guidewalls_side",
+                                    "guidewalls_nos_ncg",
+                                    "length_ncg",
+                                    "basement_soilwork_osncg",
+                                    "volume_cc148_basement_concrete_osncg",
+                                    "volume_cc136_to_make_canal_guidewalls_osncg"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            ncg_village_df = ncg_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "guidewalls_side": "Side",
+                                    "guidewalls_nos_ncg": "No.",
+                                    "length_ncg": "Length-mtrs",
+                                    "basement_soilwork_osncg": "Basement soil work",
+                                    "volume_cc148_basement_concrete_osncg":
+                                        "Basement concrete volume-cubmtrs",
+                                    "volume_cc136_to_make_canal_guidewalls_osncg":
+                                        "Canal guidewall volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                ncg_village_df,
+                                use_container_width=True
+                            )
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
