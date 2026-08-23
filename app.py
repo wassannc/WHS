@@ -601,7 +601,86 @@ elif page in FORMS:
                             st.dataframe(
                                 gbjl_village_df,
                                 use_container_width=True
-                            )            
+                            ) 
+                # -----------------------------------------
+                # LEAKAGE THROUGH CANAL BED
+                # -----------------------------------------
+                
+                if "leakage_through_canal_bed" in repair_types:
+                
+                    st.subheader("💧 Leakage Through Canal Bed")
+                
+                    lcb_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.stop_leak_bodywall_repeat.stop_leak_bodywall_repeat_"
+                    )
+                
+                    if lcb_df.empty:
+                
+                        st.info("No Leakage Through Canal Bed records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        lcb_df = lcb_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        lcb_village_df = lcb_df[
+                            lcb_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if lcb_village_df.empty:
+                
+                            st.info(
+                                f"No Leakage Through Canal Bed data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            lcb_village_df = lcb_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "avg_length_la_leak1_sl",
+                                    "avg_breadth_la_leak1_sl",
+                                    "avg_height_sl_la_leak1",
+                                    "cc124_volume_la_sl_leak1"
+                                ]
+                            ]
+                
+                            lcb_village_df = lcb_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "avg_length_la_leak1_sl": "Avg Length-mtrs",
+                                    "avg_breadth_la_leak1_sl": "Avg Breadth-mtrs",
+                                    "avg_height_sl_la_leak1": "Avg Height-mtrs",
+                                    "cc124_volume_la_sl_leak1":
+                                        "Volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                lcb_village_df,
+                                use_container_width=True
+                            )    
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
