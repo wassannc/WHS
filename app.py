@@ -760,6 +760,86 @@ elif page in FORMS:
                                 la_village_df,
                                 use_container_width=True
                             )
+                # -----------------------------------------
+                # SCOURVENT OPENING
+                # -----------------------------------------
+                
+                if "Scourvent_opening" in repair_types:
+                
+                    st.subheader("🔘 Scourvent Opening")
+                
+                    so_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.so"
+                    )
+                
+                    if so_df.empty:
+                
+                        st.info("No Scourvent Opening records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        so_df = so_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        so_village_df = so_df[
+                            so_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if so_village_df.empty:
+                
+                            st.info(
+                                f"No Scourvent Opening data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            # Select required columns
+                            so_village_df = so_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "avg_length_so",
+                                    "avg_breadth_so",
+                                    "avg_height_so",
+                                    "volume_so"
+                                ]
+                            ]
+                
+                            # Rename columns
+                            so_village_df = so_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "avg_length_so": "Avg Length-mtrs",
+                                    "avg_breadth_so": "Avg Breadth-mtrs",
+                                    "avg_height_so": "Avg Height-mtrs",
+                                    "volume_so": "Volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                so_village_df,
+                                use_container_width=True
+                            )
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
