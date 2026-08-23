@@ -518,6 +518,90 @@ elif page in FORMS:
                                 wc_village_df,
                                 use_container_width=True
                             )    
+                # -----------------------------------------
+                # GUIDEWALL BEDJOINT LEAKAGE
+                # -----------------------------------------
+                
+                if "guidewall_and_bed_joint_leakage" in repair_types:
+                
+                    st.subheader("🧱 Guidewall Bedjoint Leakage")
+                
+                    gbjl_df = load_repeat_data(
+                        "2.Rejuvenation_works",
+                        "Submissions.gwbjl.gwbjl_"
+                    )
+                
+                    if gbjl_df.empty:
+                        st.info("No Guidewall Bedjoint Leakage records found.")
+                
+                    else:
+                
+                        # Link repeat records to main submissions
+                        gbjl_df = gbjl_df.merge(
+                            main_df[
+                                [
+                                    "KEY",
+                                    "basic_details_repairs-village",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-block"
+                                ]
+                            ],
+                            left_on="__Submissions-id",
+                            right_on="KEY",
+                            how="left"
+                        )
+                
+                        # Filter selected village
+                        gbjl_village_df = gbjl_df[
+                            gbjl_df["basic_details_repairs-village"]
+                            .astype(str)
+                            .str.strip()
+                            == selected_village
+                        ].copy()
+                
+                        if gbjl_village_df.empty:
+                
+                            st.info(
+                                f"No Guidewall Bedjoint Leakage data found for {selected_village}."
+                            )
+                
+                        else:
+                
+                            gbjl_village_df = gbjl_village_df[
+                                [
+                                    "basic_details_repairs-block",
+                                    "basic_details_repairs-gp",
+                                    "basic_details_repairs-village",
+                                    "leakage_canal_length_gwbjl_leak1",
+                                    "leakage_canal_breadth_gwbjl_leak1",
+                                    "leakage_canal_height_gwbjl_leak1",
+                                    "volume_cc_gwbjl_leak1",
+                                    "total_volume_gwbjl"
+                                ]
+                            ]
+                
+                            gbjl_village_df = gbjl_village_df.rename(
+                                columns={
+                                    "basic_details_repairs-block": "Block",
+                                    "basic_details_repairs-gp": "GP",
+                                    "basic_details_repairs-village": "Village",
+                                    "leakage_canal_length_gwbjl_leak1":
+                                        "Length-mtrs",
+                                    "leakage_canal_breadth_gwbjl_leak1":
+                                        "Breadth-mtrs",
+                                    "leakage_canal_height_gwbjl_leak1":
+                                        "Height-mtrs",
+                                    "volume_cc_gwbjl_leak1":
+                                        "Volume-cubmtrs",
+                                    "total_volume_gwbjl":
+                                        "Total Volume-cubmtrs"
+                                }
+                            )
+                
+                            st.dataframe(
+                                gbjl_village_df,
+                                use_container_width=True
+                            )            
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
