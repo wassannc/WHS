@@ -918,6 +918,79 @@ elif page in FORMS:
                                 wsc_village_df,
                                 use_container_width=True
                             )
+                # -----------------------------------------
+                # DAM MEASUREMENT - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Dam_measurement" in repair_types:
+                
+                    st.subheader("📏 Dam Measurement")
+                
+                    dam_columns = [
+                        "Dam_measurements-Checkdam_lenght",
+                        "Dam_measurements-Checkdam_top_width",
+                        "Dam_measurements-Checkdam_height",
+                        "Dam_measurements-Steps_available",
+                        "Dam_measurements-Steps_need",
+                        "Dam_measurements-Steps_required",
+                
+                        "Dam_measurements-guidewall_step1_nos",
+                        "Dam_measurements-guidewall_step1_length",
+                        "Dam_measurements-guidewall_step1_width",
+                        "Dam_measurements-guidewall_step1_height",
+                        "Dam_measurements-guidewall_step1_volume",
+                
+                        "Dam_measurements-guidewall_step2_nos",
+                        "Dam_measurements-guidewall_step2_length",
+                        "Dam_measurements-guidewall_step2_width",
+                        "Dam_measurements-guidewall_step2_height",
+                        "Dam_measurements-guidewall_step2_volume",
+                
+                        "Dam_measurements-guidewall_step3_nos",
+                        "Dam_measurements-guidewall_step3_length",
+                        "Dam_measurements-guidewall_step3_width",
+                        "Dam_measurements-guidewall_step3_height",
+                        "Dam_measurements-guidewall_step3_volume",
+                
+                        "Dam_measurements-steps_volume",
+                
+                        "Dam_guidewall-Dam_guidewalls",
+                        "Dam_guidewall-guidewalls",
+                
+                        "Dam_guidewall-gw_right_length",
+                        "Dam_guidewall-soilwork_gw_right",
+                        "Dam_guidewall-cc148_gw_right",
+                
+                        "Dam_guidewall-gw_left_length",
+                        "Dam_guidewall-soilwork_gw_left",
+                        "Dam_guidewall-cc148_gw_left",
+                
+                        "Dam_guidewall-Dam_GPS-Latitude",
+                        "Dam_guidewall-Dam_GPS-Longitude"
+                    ]
+                
+                    # Keep only columns that actually exist
+                    available_dam_columns = [
+                        col for col in dam_columns
+                        if col in village_df.columns
+                    ]
+                
+                    if available_dam_columns:
+                
+                        dam_df = village_df[
+                            available_dam_columns
+                        ].copy()
+                
+                        st.dataframe(
+                            dam_df,
+                            use_container_width=True
+                        )
+                
+                    else:
+                
+                        st.info(
+                            "No Dam Measurement data found for this village."
+                        )
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
