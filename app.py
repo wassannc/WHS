@@ -1232,7 +1232,10 @@ elif page in FORMS:
                         "so-upper_length_so",
                         "so-avg_length_so",
                         "so-avg_height_so",
-                        "so-volume_so"
+                        "so-volume_so",
+                        "so-gps_so-Latitude",
+                        "so-gps_so-Longitude",
+                        "so-image_so"   
                     ]
                 
                     # Keep only columns available in the main table
@@ -1267,7 +1270,14 @@ elif page in FORMS:
                                     "Average Height-m",
                 
                                 "so-volume_so":
-                                    "Volume-cum"
+                                    "Volume-cum",
+                                
+                                "so-gps_so-Latitude":
+                                    "GPS Latitude",
+                                "so-gps_so-Longitude":
+                                    "GPS Longitude",
+                                "so-image_so":
+                                    "Photo"
                             }
                         )
                 
