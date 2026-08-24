@@ -1216,6 +1216,72 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # TALUS REPACKING - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Talus_repacking" in repair_types:
+                
+                    st.subheader("⛰️ Talus Repacking")
+                
+                    talus_cols = [
+                        "so-lower_breadth_so",
+                        "so-upper_breadth_so",
+                        "so-avg_breadth_so",
+                        "so-lower_length_so",
+                        "so-upper_length_so",
+                        "so-avg_length_so",
+                        "so-avg_height_so",
+                        "so-volume_so"
+                    ]
+                
+                    # Keep only columns available in the main table
+                    available_talus_cols = [
+                        col for col in talus_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_talus_cols:
+                
+                        talus_df = village_df[
+                            available_talus_cols
+                        ].copy()
+                
+                        talus_df = talus_df.rename(
+                            columns={
+                                "so-lower_breadth_so":
+                                    "Lower Breadth-m",
+                                "so-upper_breadth_so":
+                                    "Upper Breadth-m",
+                                "so-avg_breadth_so":
+                                    "Average Breadth-m",
+                
+                                "so-lower_length_so":
+                                    "Lower Length-m",
+                                "so-upper_length_so":
+                                    "Upper Length-m",
+                                "so-avg_length_so":
+                                    "Average Length-m",
+                
+                                "so-avg_height_so":
+                                    "Average Height-m",
+                
+                                "so-volume_so":
+                                    "Volume-cum"
+                            }
+                        )
+                
+                        st.dataframe(
+                            talus_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    else:
+                
+                        st.info(
+                            "No Talus Repacking data found for this village."
+                        )
     
         
     elif page != "2.Rejuvenation_works":
