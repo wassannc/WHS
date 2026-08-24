@@ -2097,6 +2097,54 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # JUNGLE CLEARANCE - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Jungle_clearance" in repair_types:
+                
+                    st.subheader("🌿 Jungle Clearance")
+                
+                    jungle_cols = [
+                        "jungle_clearance-bush_clearance_type",
+                        "jungle_clearance-length_jc",
+                        "jungle_clearance-breadth_jc",
+                        "jungle_clearance-volume_jc"
+                    ]
+                
+                    available_jungle_cols = [
+                        col for col in jungle_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_jungle_cols:
+                
+                        jungle_df = village_df[
+                            available_jungle_cols
+                        ].copy()
+                
+                        jungle_df = jungle_df.rename(columns={
+                            "jungle_clearance-bush_clearance_type":
+                                "Bush Clearance Type",
+                            "jungle_clearance-length_jc":
+                                "Length-m",
+                            "jungle_clearance-breadth_jc":
+                                "Breadth-m",
+                            "jungle_clearance-volume_jc":
+                                "Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            jungle_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    else:
+                
+                        st.info(
+                            "No Jungle Clearance data found for this village."
+                        )
     
         
     elif page != "2.Rejuvenation_works":
