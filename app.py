@@ -1239,12 +1239,12 @@ elif page in FORMS:
                     ]
                 
                     # Keep only columns available in the main table
-                    available_talus_cols = [
+                    available_so_cols = [
                         col for col in so_cols
                         if col in village_df.columns
                     ]
                 
-                    if available_talus_cols:
+                    if available_so_cols:
                 
                         so_df = village_df[
                             available_so_cols
