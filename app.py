@@ -1563,6 +1563,267 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # CANAL BED AND GUIDEWALLS - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Canal_bed_and_guide_walls" in repair_types:
+                
+                    st.subheader("🧱 Canal Bed and Guidewalls")
+                
+                    # =========================================
+                    # 1. CANAL BED / REPLACEMENT
+                    # =========================================
+                
+                    st.markdown("### Canal Bed / Replacement")
+                
+                    bed_cols = [
+                        "cbagw-chainage_cbagw_from",
+                        "cbagw-chainage_cbagw_to",
+                        "cbagw-length_canalbed_guidewall_tobe_replaced",
+                        "cbagw-canal_breadth_cbagw",
+                        "cbagw-basement_depth_cbagw",
+                        "cbagw-cc_1_4_8_thickness_cbagw"
+                    ]
+                
+                    available_bed_cols = [
+                        col for col in bed_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_bed_cols:
+                
+                        bed_df = village_df[available_bed_cols].copy()
+                
+                        bed_df = bed_df.rename(columns={
+                            "cbagw-chainage_cbagw_from":
+                                "Chainage From",
+                            "cbagw-chainage_cbagw_to":
+                                "Chainage To",
+                            "cbagw-length_canalbed_guidewall_tobe_replaced":
+                                "Length to be Replaced-m",
+                            "cbagw-canal_breadth_cbagw":
+                                "Canal Breadth-m",
+                            "cbagw-basement_depth_cbagw":
+                                "Basement Depth-m",
+                            "cbagw-cc_1_4_8_thickness_cbagw":
+                                "CC 1:4:8 Thickness-m"
+                        })
+                
+                        st.dataframe(
+                            bed_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. GUIDEWALLS
+                    # =========================================
+                
+                    st.markdown("### Guidewalls")
+                
+                    guidewall_cols = [
+                        "cbagw-guidewalls_nos_cbagw",
+                        "cbagw-guidewall_breadth_cbagw",
+                        "cbagw-guidewall_height_cbagw"
+                    ]
+                
+                    available_guidewall_cols = [
+                        col for col in guidewall_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_guidewall_cols:
+                
+                        guidewall_df = village_df[
+                            available_guidewall_cols
+                        ].copy()
+                
+                        guidewall_df = guidewall_df.rename(columns={
+                            "cbagw-guidewalls_nos_cbagw":
+                                "Guidewalls Nos.",
+                            "cbagw-guidewall_breadth_cbagw":
+                                "Guidewall Breadth-m",
+                            "cbagw-guidewall_height_cbagw":
+                                "Guidewall Height-m"
+                        })
+                
+                        st.dataframe(
+                            guidewall_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 3. CONCRETE / REMOVAL
+                    # =========================================
+                
+                    st.markdown("### Concrete / Removal")
+                
+                    concrete_cols = [
+                        "cbagw-toremove_old_guidewall_cc136_cbagw",
+                        "cbagw-toremove_oldbedconcrete_cc148_cbagw",
+                        "cbagw-volume_concrete_cc148",
+                        "cbagw-volume_concrete_cc136"
+                    ]
+                
+                    available_concrete_cols = [
+                        col for col in concrete_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_concrete_cols:
+                
+                        concrete_df = village_df[
+                            available_concrete_cols
+                        ].copy()
+                
+                        concrete_df = concrete_df.rename(columns={
+                            "cbagw-toremove_old_guidewall_cc136_cbagw":
+                                "Old Guidewall CC 1:3:6 to Remove",
+                            "cbagw-toremove_oldbedconcrete_cc148_cbagw":
+                                "Old Bed Concrete CC 1:4:8 to Remove",
+                            "cbagw-volume_concrete_cc148":
+                                "Concrete Volume CC 1:4:8-cum",
+                            "cbagw-volume_concrete_cc136":
+                                "Concrete Volume CC 1:3:6-cum"
+                        })
+                
+                        st.dataframe(
+                            concrete_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 4. LOCATION / PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "cbagw-gps_cbagw-Latitude",
+                        "cbagw-gps_cbagw-Longitude",
+                        "cbagw-image_cbagw"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "cbagw-gps_cbagw-Latitude":
+                                "GPS Latitude",
+                            "cbagw-gps_cbagw-Longitude":
+                                "GPS Longitude",
+                            "cbagw-image_cbagw":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                # -----------------------------------------
+                # CANAL EXCAVATION - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Canal_excuvation" in repair_types:
+                
+                    st.subheader("🚜 Canal Excavation")
+                
+                    # =========================================
+                    # 1. CANAL EXCAVATION MEASUREMENTS
+                    # =========================================
+                
+                    st.markdown("### Canal Excavation Measurements")
+                
+                    excavation_cols = [
+                        "ce-chainage_ce_from",
+                        "ce-chainage_ce_to",
+                        "ce-canal_length_ce",
+                        "ce-canal_bed_breadth_ce",
+                        "ce-canaldepth_ce",
+                        "ce-soil_work_to_dig_canal"
+                    ]
+                
+                    available_excavation_cols = [
+                        col for col in excavation_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_excavation_cols:
+                
+                        excavation_df = village_df[
+                            available_excavation_cols
+                        ].copy()
+                
+                        excavation_df = excavation_df.rename(columns={
+                            "ce-chainage_ce_from":
+                                "Chainage From",
+                            "ce-chainage_ce_to":
+                                "Chainage To",
+                            "ce-canal_length_ce":
+                                "Canal Length-m",
+                            "ce-canal_bed_breadth_ce":
+                                "Canal Bed Breadth-m",
+                            "ce-canaldepth_ce":
+                                "Canal Depth-m",
+                            "ce-soil_work_to_dig_canal":
+                                "Soil Work to Dig Canal"
+                        })
+                
+                        st.dataframe(
+                            excavation_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. LOCATION / PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "ce-gps_ce-Latitude",
+                        "ce-gps_ce-Longitude",
+                        "ce-image_ce"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "ce-gps_ce-Latitude":
+                                "GPS Latitude",
+                            "ce-gps_ce-Longitude":
+                                "GPS Longitude",
+                            "ce-image_ce":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
     
         
     elif page != "2.Rejuvenation_works":
