@@ -1186,7 +1186,7 @@ elif page in FORMS:
                     ]
                 
                     ew_cols = [
-                        col for col in apron_cols
+                        col for col in ew_cols
                         if col in village_df.columns
                     ]
                 
