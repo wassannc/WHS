@@ -1217,12 +1217,12 @@ elif page in FORMS:
                             hide_index=True
                         )
                 # -----------------------------------------
-                # TALUS REPACKING - MAIN TABLE
+                # Scourvent Open - MAIN TABLE
                 # -----------------------------------------
                 
                 if "Talus_repacking" in repair_types:
                 
-                    st.subheader("⛰️ Talus Repacking")
+                    st.subheader("⛰️ Scourvent Open")
                 
                     talus_cols = [
                         "so-lower_breadth_so",
@@ -1290,7 +1290,7 @@ elif page in FORMS:
                     else:
                 
                         st.info(
-                            "No Talus Repacking data found for this village."
+                            "No Scourvent Open data found for this village."
                         )
     
         
