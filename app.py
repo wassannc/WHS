@@ -188,6 +188,7 @@ elif page in FORMS:
                 for repair in parts:
                     if repair not in repair_types:
                         repair_types.append(repair)
+        st.write("DEBUG - Final repair_types:", repair_types)
 
         # -----------------------------------------
         # GUIDE WALL REPAIR
