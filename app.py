@@ -1170,6 +1170,53 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                    # =========================================
+                    # 5. Other Earthwork at Dam
+                    # =========================================
+                
+                    st.markdown("### 🔨 Other Earthwork at Dam")
+                
+                    ew_cols = [
+                        "earthwork_dam-water_passing_below_aprons_bw",
+                        "earthwork_dam-us_cutoff_len",
+                        "earthwork_dam-earthwork_us",
+                        "earthwork_dam-ds_cutoff_len",
+                        "earthwork_dam-earthwork_ds",
+                        "earthwork_dam-earthwork_bw"
+                    ]
+                
+                    ew_cols = [
+                        col for col in apron_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if ew_cols:
+                
+                        ew_df = village_df[ew_cols].copy()
+                
+                        ew_df = ew_df.rename(
+                            columns={
+                                "earthwork_dam-water_passing_below_aprons_bw":
+                                    "Water passing below aprons?",
+                                "earthwork_dam-us_cutoff_len":
+                                    "Upstream cutoff length-m",
+                                "earthwork_dam-earthwork_us":
+                                    "Upstream earthwork-cum",
+                                "earthwork_dam-ds_cutoff_len":
+                                    "Downstream cutoff length-m",
+                                "earthwork_dam-earthwork_ds":
+                                    "Downstream earthwork-cum",
+                                "earthwork_dam-earthwork_bw":
+                                    "Earthwork at bottom width"
+                            }
+                        )
+                
+                        st.dataframe(
+                            ew_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+    
         
     elif page != "2.Rejuvenation_works":
         df = load_data(config["form_id"])
