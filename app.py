@@ -2145,6 +2145,48 @@ elif page in FORMS:
                         st.info(
                             "No Jungle Clearance data found for this village."
                         )
+                # -----------------------------------------
+                # JALAMITHRA NOTES - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Jalamithra_notes" in repair_types:
+                
+                    st.subheader("📝 Jalamithra Notes")
+                
+                    jalamithra_cols = [
+                        "enumerator-Jalamithra",
+                        "enumerator-Jalamithra_notes"
+                    ]
+                
+                    available_jalamithra_cols = [
+                        col for col in jalamithra_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_jalamithra_cols:
+                
+                        jalamithra_df = village_df[
+                            available_jalamithra_cols
+                        ].copy()
+                
+                        jalamithra_df = jalamithra_df.rename(columns={
+                            "enumerator-Jalamithra":
+                                "Jalamithra",
+                            "enumerator-Jalamithra_notes":
+                                "Notes"
+                        })
+                
+                        st.dataframe(
+                            jalamithra_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    else:
+                
+                        st.info(
+                            "No Jalamithra notes found for this village."
+                        )
     
         
     elif page != "2.Rejuvenation_works":
