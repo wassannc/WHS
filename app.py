@@ -1344,6 +1344,7 @@ elif page in FORMS:
                         )
                 
                     # =========================================
+                    
                     # 2. TALUS TO REPACK
                     # =========================================
                 
@@ -1384,6 +1385,102 @@ elif page in FORMS:
                 
                         st.dataframe(
                             repack_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                # -----------------------------------------
+                # CANAL EXCESS WATER DRAWING - MAIN TABLE
+                # -----------------------------------------
+                
+                if "canal_excess_water_drawing" in repair_types:
+                
+                    st.subheader("💧 Canal Excess Water Drawing")
+                
+                    # =========================================
+                    # 1. BASEMENT SOIL WORK
+                    # =========================================
+                
+                    st.markdown("### Basement Soil Work")
+                
+                    soil_cols = [
+                        "cewd-chainage_soil_work_for_basement_from",
+                        "cewd-chainage_soil_work_for_basement_to",
+                        "cewd-basement_length_soil_work",
+                        "cewd-basement_breadth_soil_work",
+                        "cewd-basement_depth_soil_work",
+                        "cewd-total_soilwork_basement_cum"
+                    ]
+                
+                    available_soil_cols = [
+                        col for col in soil_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_soil_cols:
+                
+                        soil_df = village_df[available_soil_cols].copy()
+                
+                        soil_df = soil_df.rename(columns={
+                            "cewd-chainage_soil_work_for_basement_from":
+                                "Chainage From",
+                            "cewd-chainage_soil_work_for_basement_to":
+                                "Chainage To",
+                            "cewd-basement_length_soil_work":
+                                "Length-m",
+                            "cewd-basement_breadth_soil_work":
+                                "Breadth-m",
+                            "cewd-basement_depth_soil_work":
+                                "Depth-m",
+                            "cewd-total_soilwork_basement_cum":
+                                "Total Soil Work-cum"
+                        })
+                
+                        st.dataframe(
+                            soil_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. BASEMENT CONCRETE WORK
+                    # =========================================
+                
+                    st.markdown("### Basement Concrete Work")
+                
+                    concrete_cols = [
+                        "cewd-cc_concrete_work_basement",
+                        "cewd-basement_length_concrete_work",
+                        "cewd-basement_breadth_concrete_work",
+                        "cewd-basement_depth_concrete_work",
+                        "cewd-total_concrete_work_basement"
+                    ]
+                
+                    available_concrete_cols = [
+                        col for col in concrete_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_concrete_cols:
+                
+                        concrete_df = village_df[
+                            available_concrete_cols
+                        ].copy()
+                
+                        concrete_df = concrete_df.rename(columns={
+                            "cewd-cc_concrete_work_basement":
+                                "Concrete Work",
+                            "cewd-basement_length_concrete_work":
+                                "Length-m",
+                            "cewd-basement_breadth_concrete_work":
+                                "Breadth-m",
+                            "cewd-basement_depth_concrete_work":
+                                "Depth-m",
+                            "cewd-total_concrete_work_basement":
+                                "Total Concrete Work-cum"
+                        })
+                
+                        st.dataframe(
+                            concrete_df,
                             use_container_width=True,
                             hide_index=True
                         )
