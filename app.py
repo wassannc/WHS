@@ -1484,6 +1484,85 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                
+                    # =========================================
+                    # 3. WALL TO BE CONSTRUCTED
+                    # =========================================
+                
+                    st.markdown("### Wall to be Constructed")
+                
+                    wall_cols = [
+                        "cewd-length_wall_tobe_constrn",
+                        "cewd-breadth_wall_tobe_constrn",
+                        "cewd-height_wall_tobe_constrn",
+                        "cewd-volume_walls_cum"
+                    ]
+                
+                    available_wall_cols = [
+                        col for col in wall_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_wall_cols:
+                
+                        wall_df = village_df[
+                            available_wall_cols
+                        ].copy()
+                
+                        wall_df = wall_df.rename(columns={
+                            "cewd-length_wall_tobe_constrn":
+                                "Length-m",
+                            "cewd-breadth_wall_tobe_constrn":
+                                "Breadth-m",
+                            "cewd-height_wall_tobe_constrn":
+                                "Height-m",
+                            "cewd-volume_walls_cum":
+                                "Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            wall_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 4. LOCATION & PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "cewd-gps_cewd-Latitude",
+                        "cewd-gps_cewd-Longitude",
+                        "cewd-image_cewd"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "cewd-gps_cewd-Latitude":
+                                "GPS Latitude",
+                            "cewd-gps_cewd-Longitude":
+                                "GPS Longitude",
+                            "cewd-image_cewd":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
     
         
     elif page != "2.Rejuvenation_works":
