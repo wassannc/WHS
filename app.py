@@ -1824,6 +1824,98 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # DESILTATION AT THE DAM - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Desiltation_at_the_dam" in repair_types:
+                
+                    st.subheader("🪨 Desiltation at the Dam")
+                
+                    # =========================================
+                    # 1. DESILTATION MEASUREMENTS
+                    # =========================================
+                
+                    st.markdown("### Desiltation Measurements")
+                
+                    desilt_cols = [
+                        "datd-length_datd",
+                        "datd-breadth_datd",
+                        "datd-depth_datd",
+                        "datd-volume_soil_datd"
+                    ]
+                
+                    available_desilt_cols = [
+                        col for col in desilt_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_desilt_cols:
+                
+                        desilt_df = village_df[
+                            available_desilt_cols
+                        ].copy()
+                
+                        desilt_df = desilt_df.rename(columns={
+                            "datd-length_datd":
+                                "Length-m",
+                            "datd-breadth_datd":
+                                "Breadth-m",
+                            "datd-depth_datd":
+                                "Depth-m",
+                            "datd-volume_soil_datd":
+                                "Soil Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            desilt_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. LOCATION / PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "datd-gps_ce-Latitude",
+                        "datd-gps_ce-Longitude",
+                        "datd-gps_ce-Altitude",
+                        "datd-gps_ce-Accuracy",
+                        "datd-image_ce"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "datd-gps_ce-Latitude":
+                                "GPS Latitude",
+                            "datd-gps_ce-Longitude":
+                                "GPS Longitude",
+                            "datd-gps_ce-Altitude":
+                                "GPS Altitude",
+                            "datd-gps_ce-Accuracy":
+                                "GPS Accuracy",
+                            "datd-image_ce":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
     
         
     elif page != "2.Rejuvenation_works":
