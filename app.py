@@ -166,7 +166,8 @@ elif page in FORMS:
                 f"**Block:** {village_df['basic_details_repairs-block'].iloc[0]}   "
                 f"**GP:** {village_df['basic_details_repairs-gp'].iloc[0]}"
             )
-
+        st.write("DEBUG - Village rows:", len(village_df))
+        st.write("DEBUG - Raw checkdam_repairs:", village_df["checkdam_repairs"].tolist())
         # -----------------------------------------
         # REPAIR TYPES PRESENT IN THIS VILLAGE
         # -----------------------------------------
