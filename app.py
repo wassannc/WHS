@@ -1220,11 +1220,11 @@ elif page in FORMS:
                 # Scourvent Open - MAIN TABLE
                 # -----------------------------------------
                 
-                if "Talus_repacking" in repair_types:
+                if "Scourvent_opening" in repair_types:
                 
                     st.subheader("⛰️ Scourvent Open")
                 
-                    talus_cols = [
+                    so_cols = [
                         "so-lower_breadth_so",
                         "so-upper_breadth_so",
                         "so-avg_breadth_so",
@@ -1240,17 +1240,17 @@ elif page in FORMS:
                 
                     # Keep only columns available in the main table
                     available_talus_cols = [
-                        col for col in talus_cols
+                        col for col in so_cols
                         if col in village_df.columns
                     ]
                 
                     if available_talus_cols:
                 
-                        talus_df = village_df[
-                            available_talus_cols
+                        so_df = village_df[
+                            available_so_cols
                         ].copy()
                 
-                        talus_df = talus_df.rename(
+                        so_df = so_df.rename(
                             columns={
                                 "so-lower_breadth_so":
                                     "Lower Breadth-m",
@@ -1282,7 +1282,7 @@ elif page in FORMS:
                         )
                 
                         st.dataframe(
-                            talus_df,
+                            so_df,
                             use_container_width=True,
                             hide_index=True
                         )
@@ -1291,6 +1291,101 @@ elif page in FORMS:
                 
                         st.info(
                             "No Scourvent Open data found for this village."
+                        )
+                # -----------------------------------------
+                # TALUS REPACKING - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Talus_repacking" in repair_types:
+                
+                    st.subheader("⛰️ Talus Repacking")
+                
+                    # =========================================
+                    # 1. EXISTING TALUS
+                    # =========================================
+                
+                    st.markdown("### Existing Talus")
+                
+                    talus_cols = [
+                        "tr-avg_breadth_tr",
+                        "tr-avg_length_tr",
+                        "tr-avg_depth_tr",
+                        "tr-gps_tr-Latitude",
+                        "tr-gps_tr-Longitude",
+                        "tr-image_tr",
+                        "tr-volume_tr"
+                    ]
+                
+                    available_talus_cols = [
+                        col for col in talus_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_talus_cols:
+                
+                        talus_df = village_df[
+                            available_talus_cols
+                        ].copy()
+                
+                        talus_df = talus_df.rename(columns={
+                            "tr-avg_breadth_tr": "Avg Breadth-m",
+                            "tr-avg_length_tr": "Avg Length-m",
+                            "tr-avg_depth_tr": "Avg Depth-m",
+                            "tr-gps_tr-Latitude": "GPS Latitude",
+                            "tr-gps_tr-Longitude": "GPS Longitude",
+                            "tr-image_tr": "Photo",
+                            "tr-volume_tr": "Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            talus_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. TALUS TO REPACK
+                    # =========================================
+                
+                    st.markdown("### Talus to Repack")
+                
+                    repack_cols = [
+                        "tr-to_repack_tp",
+                        "tr-avg_breadth_tp",
+                        "tr-avg_length_tp",
+                        "tr-avg_height_tp",
+                        "tr-gps_tp-Latitude",
+                        "tr-gps_tp-Longitude",
+                        "tr-image_tp",
+                        "tr-volume_tp"
+                    ]
+                
+                    available_repack_cols = [
+                        col for col in repack_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_repack_cols:
+                
+                        repack_df = village_df[
+                            available_repack_cols
+                        ].copy()
+                
+                        repack_df = repack_df.rename(columns={
+                            "tr-to_repack_tp": "To Repack",
+                            "tr-avg_breadth_tp": "Avg Breadth-m",
+                            "tr-avg_length_tp": "Avg Length-m",
+                            "tr-avg_height_tp": "Avg Height-m",
+                            "tr-gps_tp-Latitude": "GPS Latitude",
+                            "tr-gps_tp-Longitude": "GPS Longitude",
+                            "tr-image_tp": "Photo",
+                            "tr-volume_tp": "Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            repack_df,
+                            use_container_width=True,
+                            hide_index=True
                         )
     
         
