@@ -195,7 +195,6 @@ elif page in FORMS:
         # -----------------------------------------
 
         if "Guide_wall_repair" in repair_types:
-            st.write("DEBUG - ENTERED NEW CANAL GUIDEWALL")
             st.subheader("🔧 Guidewall Repair")
 
             # Load Guidewall repeat table
@@ -276,6 +275,7 @@ elif page in FORMS:
                 # -----------------------------------------
 
                 if "New_canal_guidewall" in repair_types:
+                    st.write("DEBUG - ENTERED NEW CANAL GUIDEWALL")
                 
                     st.subheader("🏗️ New Canal Guidewall")
                 
