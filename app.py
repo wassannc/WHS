@@ -2011,6 +2011,92 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # SLUICE GATE - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Sluice_gate" in repair_types:
+                
+                    st.subheader("🚪 Sluice Gate")
+                
+                    # =========================================
+                    # 1. SLUICE GATE MEASUREMENTS
+                    # =========================================
+                
+                    st.markdown("### Sluice Gate Measurements")
+                
+                    sluice_cols = [
+                        "slc_gt-sluice_gate",
+                        "slc_gt-sluice_gate_width",
+                        "slc_gt-sluice_gate_height",
+                        "slc_gt-sluice_gate_volume"
+                    ]
+                
+                    available_sluice_cols = [
+                        col for col in sluice_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_sluice_cols:
+                
+                        sluice_df = village_df[
+                            available_sluice_cols
+                        ].copy()
+                
+                        sluice_df = sluice_df.rename(columns={
+                            "slc_gt-sluice_gate":
+                                "Sluice Gate",
+                            "slc_gt-sluice_gate_width":
+                                "Width-m",
+                            "slc_gt-sluice_gate_height":
+                                "Height-m",
+                            "slc_gt-sluice_gate_volume":
+                                "Volume-cum"
+                        })
+                
+                        st.dataframe(
+                            sluice_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. LOCATION / PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "slc_gt-GPS_sluice_gate-Latitude",
+                        "slc_gt-GPS_sluice_gate-Longitude",
+                        "slc_gt-Photo_sluice_gate"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "slc_gt-GPS_sluice_gate-Latitude":
+                                "GPS Latitude",
+                            "slc_gt-GPS_sluice_gate-Longitude":
+                                "GPS Longitude",
+                            "slc_gt-Photo_sluice_gate":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
     
         
     elif page != "2.Rejuvenation_works":
