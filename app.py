@@ -926,70 +926,249 @@ elif page in FORMS:
                 
                     st.subheader("📏 Dam Measurement")
                 
-                    dam_columns = [
+                    # =========================================
+                    # 1. CHECKDAM MEASUREMENTS
+                    # =========================================
+                
+                    st.markdown("### 📐 Checkdam Measurements")
+                
+                    checkdam_cols = [
                         "Dam_measurements-Checkdam_lenght",
                         "Dam_measurements-Checkdam_top_width",
                         "Dam_measurements-Checkdam_height",
                         "Dam_measurements-Steps_available",
                         "Dam_measurements-Steps_need",
                         "Dam_measurements-Steps_required",
-                
-                        "Dam_measurements-guidewall_step1_nos",
-                        "Dam_measurements-guidewall_step1_length",
-                        "Dam_measurements-guidewall_step1_width",
-                        "Dam_measurements-guidewall_step1_height",
-                        "Dam_measurements-guidewall_step1_volume",
-                
-                        "Dam_measurements-guidewall_step2_nos",
-                        "Dam_measurements-guidewall_step2_length",
-                        "Dam_measurements-guidewall_step2_width",
-                        "Dam_measurements-guidewall_step2_height",
-                        "Dam_measurements-guidewall_step2_volume",
-                
-                        "Dam_measurements-guidewall_step3_nos",
-                        "Dam_measurements-guidewall_step3_length",
-                        "Dam_measurements-guidewall_step3_width",
-                        "Dam_measurements-guidewall_step3_height",
-                        "Dam_measurements-guidewall_step3_volume",
-                
-                        "Dam_measurements-steps_volume",
-                
-                        "Dam_guidewall-Dam_guidewalls",
-                        "Dam_guidewall-guidewalls",
-                
-                        "Dam_guidewall-gw_right_length",
-                        "Dam_guidewall-soilwork_gw_right",
-                        "Dam_guidewall-cc148_gw_right",
-                
-                        "Dam_guidewall-gw_left_length",
-                        "Dam_guidewall-soilwork_gw_left",
-                        "Dam_guidewall-cc148_gw_left",
-                
-                        "Dam_guidewall-Dam_GPS-Latitude",
-                        "Dam_guidewall-Dam_GPS-Longitude"
+                        "Dam_measurements-steps_volume"
                     ]
                 
-                    # Keep only columns that actually exist
-                    available_dam_columns = [
-                        col for col in dam_columns
+                    checkdam_cols = [
+                        col for col in checkdam_cols
                         if col in village_df.columns
                     ]
                 
-                    if available_dam_columns:
+                    if checkdam_cols:
                 
-                        dam_df = village_df[
-                            available_dam_columns
-                        ].copy()
+                        checkdam_df = village_df[checkdam_cols].copy()
                 
-                        st.dataframe(
-                            dam_df,
-                            use_container_width=True
+                        checkdam_df = checkdam_df.rename(
+                            columns={
+                                "Dam_measurements-Checkdam_lenght":
+                                    "Checkdam Length-m",
+                                "Dam_measurements-Checkdam_top_width":
+                                    "Checkdam Top Width-m",
+                                "Dam_measurements-Checkdam_height":
+                                    "Checkdam Height-m",
+                                "Dam_measurements-Steps_available":
+                                    "Steps Available",
+                                "Dam_measurements-Steps_need":
+                                    "Steps Need",
+                                "Dam_measurements-Steps_required":
+                                    "Steps Required",
+                                "Dam_measurements-steps_volume":
+                                    "Steps Volume-cum"
+                            }
                         )
                 
-                    else:
+                        st.dataframe(
+                            checkdam_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
                 
-                        st.info(
-                            "No Dam Measurement data found for this village."
+                    # =========================================
+                    # 2. GUIDE WALLS
+                    # =========================================
+                
+                    st.markdown("### 🧱 Guidewalls")
+                
+                    guidewall_rows = []
+                
+                    for step in [1, 2, 3]:
+                
+                        nos_col = f"Dam_measurements-guidewall_step{step}_nos"
+                        length_col = f"Dam_measurements-guidewall_step{step}_length"
+                        width_col = f"Dam_measurements-guidewall_step{step}_width"
+                        height_col = f"Dam_measurements-guidewall_step{step}_height"
+                        volume_col = f"Dam_measurements-guidewall_step{step}_volume"
+                
+                        if any(
+                            col in village_df.columns
+                            for col in [
+                                nos_col,
+                                length_col,
+                                width_col,
+                                height_col,
+                                volume_col
+                            ]
+                        ):
+                
+                            guidewall_rows.append({
+                                "Step": f"Step {step}",
+                                "No.": village_df[nos_col].iloc[0]
+                                    if nos_col in village_df.columns else "",
+                                "Length-m": village_df[length_col].iloc[0]
+                                    if length_col in village_df.columns else "",
+                                "Width-m": village_df[width_col].iloc[0]
+                                    if width_col in village_df.columns else "",
+                                "Height-m": village_df[height_col].iloc[0]
+                                    if height_col in village_df.columns else "",
+                                "Volume-cum": village_df[volume_col].iloc[0]
+                                    if volume_col in village_df.columns else ""
+                            })
+                
+                    if guidewall_rows:
+                
+                        guidewall_df = pd.DataFrame(guidewall_rows)
+                
+                        st.dataframe(
+                            guidewall_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 3. ABUTMENTS
+                    # =========================================
+                
+                    st.markdown("### 🏗️ Abutments")
+                
+                    abutment_rows = []
+                
+                    if any(
+                        col in village_df.columns
+                        for col in [
+                            "Dam_guidewall-abutments_condition",
+                            "Dam_guidewall-abutment_right",
+                            "Dam_guidewall-soilwork_abutment_right",
+                            "Dam_guidewall-cc148_abutment_right"
+                        ]
+                    ):
+                
+                        abutment_rows.append({
+                            "Side": "Right",
+                            "Condition":
+                                village_df[
+                                    "Dam_guidewall-abutments_condition"
+                                ].iloc[0]
+                                if "Dam_guidewall-abutments_condition"
+                                in village_df.columns else "",
+                
+                            "Abutment":
+                                village_df[
+                                    "Dam_guidewall-abutment_right"
+                                ].iloc[0]
+                                if "Dam_guidewall-abutment_right"
+                                in village_df.columns else "",
+                
+                            "Soil Work":
+                                village_df[
+                                    "Dam_guidewall-soilwork_abutment_right"
+                                ].iloc[0]
+                                if "Dam_guidewall-soilwork_abutment_right"
+                                in village_df.columns else "",
+                
+                            "CC 1:4:8":
+                                village_df[
+                                    "Dam_guidewall-cc148_abutment_right"
+                                ].iloc[0]
+                                if "Dam_guidewall-cc148_abutment_right"
+                                in village_df.columns else ""
+                        })
+                
+                    if any(
+                        col in village_df.columns
+                        for col in [
+                            "Dam_guidewall-abutments_condition",
+                            "Dam_guidewall-abutment_left",
+                            "Dam_guidewall-soilwork_abutment_left",
+                            "Dam_guidewall-cc148_abutment_left"
+                        ]
+                    ):
+                
+                        abutment_rows.append({
+                            "Side": "Left",
+                            "Condition":
+                                village_df[
+                                    "Dam_guidewall-abutments_condition"
+                                ].iloc[0]
+                                if "Dam_guidewall-abutments_condition"
+                                in village_df.columns else "",
+                
+                            "Abutment":
+                                village_df[
+                                    "Dam_guidewall-abutment_left"
+                                ].iloc[0]
+                                if "Dam_guidewall-abutment_left"
+                                in village_df.columns else "",
+                
+                            "Soil Work":
+                                village_df[
+                                    "Dam_guidewall-soilwork_abutment_left"
+                                ].iloc[0]
+                                if "Dam_guidewall-soilwork_abutment_left"
+                                in village_df.columns else "",
+                
+                            "CC 1:4:8":
+                                village_df[
+                                    "Dam_guidewall-cc148_abutment_left"
+                                ].iloc[0]
+                                if "Dam_guidewall-cc148_abutment_left"
+                                in village_df.columns else ""
+                        })
+                
+                    if abutment_rows:
+                
+                        abutment_df = pd.DataFrame(abutment_rows)
+                
+                        st.dataframe(
+                            abutment_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 4. APRON
+                    # =========================================
+                
+                    st.markdown("### 🔨 Apron")
+                
+                    apron_cols = [
+                        "Dam_guidewall-apron_condition",
+                        "Dam_guidewall-len_apron1",
+                        "Dam_guidewall-len_apron2",
+                        "Dam_guidewall-volume_apron1",
+                        "Dam_guidewall-volume_apron2"
+                    ]
+                
+                    apron_cols = [
+                        col for col in apron_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if apron_cols:
+                
+                        apron_df = village_df[apron_cols].copy()
+                
+                        apron_df = apron_df.rename(
+                            columns={
+                                "Dam_guidewall-apron_condition":
+                                    "Condition",
+                                "Dam_guidewall-len_apron1":
+                                    "Apron Length 1-m",
+                                "Dam_guidewall-len_apron2":
+                                    "Apron Length 2-m",
+                                "Dam_guidewall-volume_apron1":
+                                    "Apron Volume 1-cum",
+                                "Dam_guidewall-volume_apron2":
+                                    "Apron Volume 2-cum"
+                            }
+                        )
+                
+                        st.dataframe(
+                            apron_df,
+                            use_container_width=True,
+                            hide_index=True
                         )
         
     elif page != "2.Rejuvenation_works":
