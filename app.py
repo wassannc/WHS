@@ -1916,6 +1916,101 @@ elif page in FORMS:
                             use_container_width=True,
                             hide_index=True
                         )
+                # -----------------------------------------
+                # CANAL DESILTATION - MAIN TABLE
+                # -----------------------------------------
+                
+                if "Canal_desiltation" in repair_types:
+                
+                    st.subheader("🪨 Canal Desiltation")
+                
+                    # =========================================
+                    # 1. CANAL DESILTATION MEASUREMENTS
+                    # =========================================
+                
+                    st.markdown("### Canal Desiltation Measurements")
+                
+                    desilt_cols = [
+                        "cd-chainage_cd_from",
+                        "cd-chainage_cd_to",
+                        "cd-canal_length_cd",
+                        "cd-canal_upper_breadth_mathati_cd",
+                        "cd-canalbed_breadth_cd",
+                        "cd-soil_dunes_height_cd",
+                        "cd-volume_soil_tobe_removed_canal_cd"
+                    ]
+                
+                    available_desilt_cols = [
+                        col for col in desilt_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_desilt_cols:
+                
+                        canal_desilt_df = village_df[
+                            available_desilt_cols
+                        ].copy()
+                
+                        canal_desilt_df = canal_desilt_df.rename(columns={
+                            "cd-chainage_cd_from":
+                                "Chainage From",
+                            "cd-chainage_cd_to":
+                                "Chainage To",
+                            "cd-canal_length_cd":
+                                "Canal Length-m",
+                            "cd-canal_upper_breadth_mathati_cd":
+                                "Canal Upper Breadth-m",
+                            "cd-canalbed_breadth_cd":
+                                "Canal Bed Breadth-m",
+                            "cd-soil_dunes_height_cd":
+                                "Soil Dunes Height-m",
+                            "cd-volume_soil_tobe_removed_canal_cd":
+                                "Soil Volume to Remove-cum"
+                        })
+                
+                        st.dataframe(
+                            canal_desilt_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
+                
+                    # =========================================
+                    # 2. LOCATION / PHOTO
+                    # =========================================
+                
+                    location_cols = [
+                        "cd-gps_ce-Latitude",
+                        "cd-gps_ce-Longitude",
+                        "cd-image_ce"
+                    ]
+                
+                    available_location_cols = [
+                        col for col in location_cols
+                        if col in village_df.columns
+                    ]
+                
+                    if available_location_cols:
+                
+                        st.markdown("### 📍 Location / Photo")
+                
+                        location_df = village_df[
+                            available_location_cols
+                        ].copy()
+                
+                        location_df = location_df.rename(columns={
+                            "cd-gps_ce-Latitude":
+                                "GPS Latitude",
+                            "cd-gps_ce-Longitude":
+                                "GPS Longitude",
+                            "cd-image_ce":
+                                "Photo"
+                        })
+                
+                        st.dataframe(
+                            location_df,
+                            use_container_width=True,
+                            hide_index=True
+                        )
     
         
     elif page != "2.Rejuvenation_works":
