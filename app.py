@@ -428,14 +428,25 @@ elif page in FORMS:
                             "basic_details_repairs-block",
                             "basic_details_repairs-gp",
                             "basic_details_repairs-village",
+                            "chainage_canal_guidewall_height_increase_from",
+                            "chainage_canal_guidewall_height_increase_to",
                             "canal_guidewall_height_increase_side",
                             "guidewalls_nos_canal_guidewall_height_increase",
-                            "length_canal_guidewall_height_increase",
+                            "length_canal_guidewall_height_increase_left",
+                            "length_canal_guidewall_height_increase_right",
                             "width_canal_guidewall_height_increase",
                             "height_canal_guidewall_height_increase",
                             "workdetails_canal_guidewall_height_increase"
                         ]
-                    ]
+                    ].copy()
+
+                    cghi_village_df["Length-mtrs"] = cghi_village_df.apply(
+                        lambda row:
+                            row["length_canal_guidewall_height_increase_right"]
+                            if str(row["canal_guidewall_height_increase_side"]).strip().lower() == "right"
+                            else row["length_canal_guidewall_height_increase_left"],
+                        axis=1
+                    )
                 
                     # Rename columns
                     cghi_village_df = cghi_village_df.rename(
@@ -445,7 +456,6 @@ elif page in FORMS:
                             "basic_details_repairs-village": "Village",
                             "canal_guidewall_height_increase_side": "Side",
                             "guidewalls_nos_canal_guidewall_height_increase": "No.",
-                            "length_canal_guidewall_height_increase": "Length-mtrs",
                             "width_canal_guidewall_height_increase": "Width-mtrs",
                             "height_canal_guidewall_height_increase": "Height-mtrs",
                             "workdetails_canal_guidewall_height_increase": "Work details"
