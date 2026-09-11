@@ -318,7 +318,10 @@ elif page in FORMS:
             
                 else:
             
+                    # -----------------------------------------
                     # Select required columns
+                    # -----------------------------------------
+                    
                     ncg_village_df = ncg_village_df[
                         [
                             "basic_details_repairs-block",
@@ -326,14 +329,33 @@ elif page in FORMS:
                             "basic_details_repairs-village",
                             "guidewalls_side",
                             "guidewalls_nos_ncg",
-                            "length_ncg",
-                            "basement_soilwork_osncg",
-                            "volume_cc148_basement_concrete_osncg",
-                            "volume_cc136_to_make_canal_guidewalls_osncg"
+                            "chainage_ncg_from",
+                            "chainage_ncg_to",
+                            "length_ncg_right",
+                            "length_ncg_left",
+                            "gps_ncg-Latitude",
+                            "gps_ncg-Longitude"
                         ]
-                    ]
-            
+                    ].copy()
+                    
+                    
+                    # -----------------------------------------
+                    # Create Length based on Side
+                    # -----------------------------------------
+                    
+                    ncg_village_df["Length-mtrs"] = ncg_village_df.apply(
+                        lambda row:
+                            row["length_ncg_right"]
+                            if str(row["guidewalls_side"]).strip().lower() == "right"
+                            else row["length_ncg_left"],
+                        axis=1
+                    )
+                    
+                    
+                    # -----------------------------------------
                     # Rename columns
+                    # -----------------------------------------
+                    
                     ncg_village_df = ncg_village_df.rename(
                         columns={
                             "basic_details_repairs-block": "Block",
@@ -341,12 +363,10 @@ elif page in FORMS:
                             "basic_details_repairs-village": "Village",
                             "guidewalls_side": "Side",
                             "guidewalls_nos_ncg": "No.",
-                            "length_ncg": "Length-mtrs",
-                            "basement_soilwork_osncg": "Basement soil work",
-                            "volume_cc148_basement_concrete_osncg":
-                                "Basement concrete volume-cubmtrs",
-                            "volume_cc136_to_make_canal_guidewalls_osncg":
-                                "Canal guidewall volume-cubmtrs"
+                            "chainage_ncg_from": "Chainage From",
+                            "chainage_ncg_to": "Chainage To",
+                            "gps_ncg-Latitude": "GPS Latitude",
+                            "gps_ncg-Longitude": "GPS Longitude"
                         }
                     )
             
