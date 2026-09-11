@@ -333,8 +333,6 @@ elif page in FORMS:
                             "chainage_ncg_to",
                             "length_ncg_right",
                             "length_ncg_left",
-                            "gps_ncg-Latitude",
-                            "gps_ncg-Longitude"
                         ]
                     ].copy()
                     
