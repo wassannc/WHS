@@ -7,6 +7,106 @@ from streamlit_folium import st_folium
 import json
 st.set_page_config(page_title="Project Dashboard", layout="wide")
 
+# -----------------------------------------
+# COMMON LOCATION FILTER
+# BLOCK → GP → VILLAGE
+# -----------------------------------------
+
+def get_location_filter(main_df):
+
+    block_col = "basic_details_repairs-block"
+    gp_col = "basic_details_repairs-gp"
+    village_col = "basic_details_repairs-village"
+
+    # Clean location columns
+    for col in [block_col, gp_col, village_col]:
+        if col in main_df.columns:
+            main_df[col] = (
+                main_df[col]
+                .fillna("")
+                .astype(str)
+                .str.strip()
+            )
+
+    # -----------------------------
+    # BLOCK
+    # -----------------------------
+    blocks = sorted(
+        [
+            x for x in main_df[block_col].unique()
+            if x
+        ]
+    )
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        selected_block = st.selectbox(
+            "Block",
+            blocks,
+            key="master_block"
+        )
+
+    # -----------------------------
+    # GP
+    # -----------------------------
+    gp_df = main_df[
+        main_df[block_col] == selected_block
+    ]
+
+    gps = sorted(
+        [
+            x for x in gp_df[gp_col].unique()
+            if x
+        ]
+    )
+
+    with col2:
+        selected_gp = st.selectbox(
+            "GP",
+            gps,
+            key="master_gp"
+        )
+
+    # -----------------------------
+    # VILLAGE
+    # -----------------------------
+    village_df = gp_df[
+        gp_df[gp_col] == selected_gp
+    ]
+
+    villages = sorted(
+        [
+            x for x in village_df[village_col].unique()
+            if x
+        ]
+    )
+
+    with col3:
+        selected_village = st.selectbox(
+            "Village",
+            villages,
+            key="master_village"
+        )
+
+    # -----------------------------
+    # FINAL FILTER
+    # -----------------------------
+    filtered_df = main_df[
+        (main_df[block_col] == selected_block)
+        &
+        (main_df[gp_col] == selected_gp)
+        &
+        (main_df[village_col] == selected_village)
+    ].copy()
+
+    return (
+        selected_block,
+        selected_gp,
+        selected_village,
+        filtered_df
+    )
+
 # ---------------- SIDEBAR ----------------
 main_menu = st.sidebar.radio(
     "Menu",
