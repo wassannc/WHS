@@ -12,92 +12,101 @@ st.set_page_config(page_title="Project Dashboard", layout="wide")
 # BLOCK → GP → VILLAGE
 # -----------------------------------------
 
-def get_location_filter(main_df):
+def get_location_columns(config, df):
+    """Find Block / GP / Village columns from the form configuration."""
+    labels = config.get("column_labels", {})
 
-    block_col = "basic_details_repairs-block"
-    gp_col = "basic_details_repairs-gp"
-    village_col = "basic_details_repairs-village"
+    block_col = None
+    gp_col = None
+    village_col = None
+
+    for col, label in labels.items():
+        label_clean = str(label).strip().lower()
+
+        if label_clean == "block" and col in df.columns:
+            block_col = col
+        elif label_clean == "gp" and col in df.columns:
+            gp_col = col
+        elif label_clean == "village" and col in df.columns:
+            village_col = col
+
+    return block_col, gp_col, village_col
+
+
+def get_location_filter(
+    df,
+    block_col,
+    gp_col,
+    village_col,
+    key_prefix="master"
+):
+    """
+    Common Block -> GP -> Village filter.
+    Returns selected values and the filtered dataframe.
+    """
+
+    required = [block_col, gp_col, village_col]
+    missing = [col for col in required if col not in df.columns]
+
+    if missing:
+        st.warning(
+            "Location filter could not be created. Missing columns: "
+            + ", ".join(missing)
+        )
+        return None, None, None, df.copy()
+
+    work_df = df.copy()
 
     # Clean location columns
-    for col in [block_col, gp_col, village_col]:
-        if col in main_df.columns:
-            main_df[col] = (
-                main_df[col]
-                .fillna("")
-                .astype(str)
-                .str.strip()
-            )
+    for col in required:
+        work_df[col] = (
+            work_df[col]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
 
-    # -----------------------------
-    # BLOCK
-    # -----------------------------
-    blocks = sorted(
-        [
-            x for x in main_df[block_col].unique()
-            if x
-        ]
-    )
+    blocks = sorted([x for x in work_df[block_col].unique() if x])
+
+    if not blocks:
+        st.warning("No Block values found in this form.")
+        return None, None, None, work_df.iloc[0:0].copy()
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
         selected_block = st.selectbox(
-            "Block",
+            "Select Block",
             blocks,
-            key="master_block"
+            key=f"{key_prefix}_block"
         )
 
-    # -----------------------------
-    # GP
-    # -----------------------------
-    gp_df = main_df[
-        main_df[block_col] == selected_block
-    ]
-
-    gps = sorted(
-        [
-            x for x in gp_df[gp_col].unique()
-            if x
-        ]
-    )
+    gp_df = work_df[work_df[block_col] == selected_block]
+    gps = sorted([x for x in gp_df[gp_col].unique() if x])
 
     with col2:
         selected_gp = st.selectbox(
-            "GP",
+            "Select GP",
             gps,
-            key="master_gp"
+            key=f"{key_prefix}_gp"
         )
 
-    # -----------------------------
-    # VILLAGE
-    # -----------------------------
-    village_df = gp_df[
-        gp_df[gp_col] == selected_gp
-    ]
-
+    village_filter_df = gp_df[gp_df[gp_col] == selected_gp]
     villages = sorted(
-        [
-            x for x in village_df[village_col].unique()
-            if x
-        ]
+        [x for x in village_filter_df[village_col].unique() if x]
     )
 
     with col3:
         selected_village = st.selectbox(
-            "Village",
+            "Select Village",
             villages,
-            key="master_village"
+            key=f"{key_prefix}_village"
         )
 
-    # -----------------------------
-    # FINAL FILTER
-    # -----------------------------
-    filtered_df = main_df[
-        (main_df[block_col] == selected_block)
-        &
-        (main_df[gp_col] == selected_gp)
-        &
-        (main_df[village_col] == selected_village)
+    filtered_df = work_df[
+        (work_df[block_col] == selected_block)
+        & (work_df[gp_col] == selected_gp)
+        & (work_df[village_col] == selected_village)
     ].copy()
 
     return (
@@ -106,6 +115,37 @@ def get_location_filter(main_df):
         selected_village,
         filtered_df
     )
+
+
+def get_filtered_location_df(
+    df,
+    block_col,
+    gp_col,
+    village_col,
+    selected_block,
+    selected_gp,
+    selected_village
+):
+    """Filter any main/repeat dataframe using the selected master location."""
+
+    required = [block_col, gp_col, village_col]
+    if any(col not in df.columns for col in required):
+        return df.iloc[0:0].copy()
+
+    work_df = df.copy()
+    for col in required:
+        work_df[col] = (
+            work_df[col]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
+
+    return work_df[
+        (work_df[block_col] == selected_block)
+        & (work_df[gp_col] == selected_gp)
+        & (work_df[village_col] == selected_village)
+    ].copy()
 
 # ---------------- SIDEBAR ----------------
 main_menu = st.sidebar.radio(
@@ -224,149 +264,35 @@ elif page in FORMS:
             st.stop()
 
         # -----------------------------------------
-        # MASTER FILTER
+        # COMMON MASTER FILTER
         # BLOCK → GP → VILLAGE
         # -----------------------------------------
-        
-        # Clean master location columns
-        main_df["basic_details_repairs-block"] = (
-            main_df["basic_details_repairs-block"]
-            .fillna("")
-            .astype(str)
-            .str.strip()
+
+        (
+            selected_block,
+            selected_gp,
+            selected_village,
+            village_df
+        ) = get_location_filter(
+            main_df,
+            "basic_details_repairs-block",
+            "basic_details_repairs-gp",
+            "basic_details_repairs-village",
+            key_prefix="master"
         )
-        
-        main_df["basic_details_repairs-gp"] = (
-            main_df["basic_details_repairs-gp"]
-            .fillna("")
-            .astype(str)
-            .str.strip()
-        )
-        
-        main_df["basic_details_repairs-village"] = (
-            main_df["basic_details_repairs-village"]
-            .fillna("")
-            .astype(str)
-            .str.strip()
-        )
-        
-        
-        # -----------------------------------------
-        # BLOCK
-        # -----------------------------------------
-        
-        blocks = sorted(
-            [
-                x for x in
-                main_df["basic_details_repairs-block"].unique()
-                if x
-            ]
-        )
-        
-        selected_block = st.selectbox(
-            "Select Block",
-            blocks
-        )
-        
-        
-        # -----------------------------------------
-        # GP — BASED ON SELECTED BLOCK
-        # -----------------------------------------
-        
-        gp_df = main_df[
-            main_df["basic_details_repairs-block"] == selected_block
-        ]
-        
-        gps = sorted(
-            [
-                x for x in
-                gp_df["basic_details_repairs-gp"].unique()
-                if x
-            ]
-        )
-        
-        selected_gp = st.selectbox(
-            "Select GP",
-            gps
-        )
-        
-        
-        # -----------------------------------------
-        # VILLAGE — BASED ON BLOCK + GP
-        # -----------------------------------------
-        
-        village_filter_df = gp_df[
-            gp_df["basic_details_repairs-gp"] == selected_gp
-        ]
-        
-        villages = sorted(
-            [
-                x for x in
-                village_filter_df["basic_details_repairs-village"].unique()
-                if x
-            ]
-        )
-        
-        selected_village = st.selectbox(
-            "Select Village",
-            villages
-        )
-        
-        
-        # -----------------------------------------
-        # MASTER FILTER FUNCTION
-        # -----------------------------------------
-        
+
+        # Keep the same filtering logic for all Rejuvenation repeat tables.
         def apply_master_filter(df):
-        
-            return df[
-                (df["basic_details_repairs-block"]
-                    .fillna("")
-                    .astype(str)
-                    .str.strip()
-                    == selected_block)
-                &
-                (df["basic_details_repairs-gp"]
-                    .fillna("")
-                    .astype(str)
-                    .str.strip()
-                    == selected_gp)
-                &
-                (df["basic_details_repairs-village"]
-                    .fillna("")
-                    .astype(str)
-                    .str.strip()
-                    == selected_village)
-            ].copy()
-        
-        
-        # -----------------------------------------
-        # FILTER MAIN TABLE
-        # -----------------------------------------
-        
-        village_df = apply_master_filter(main_df)
-        
-        
-        # -----------------------------------------
-        # SELECTED LOCATION
-        # -----------------------------------------
-        
-        st.write(f"**Selected Block:** {selected_block}")
-        st.write(f"**Selected GP:** {selected_gp}")
-        st.write(f"**Selected Village:** {selected_village}")
-        st.write("Selected Village:", selected_village)
-
-        # -----------------------------------------
-        # BASIC VILLAGE INFORMATION
-        # -----------------------------------------
-
-        if not village_df.empty:
-
-            st.write(
-                f"**Block:** {village_df['basic_details_repairs-block'].iloc[0]}   "
-                f"**GP:** {village_df['basic_details_repairs-gp'].iloc[0]}"
+            return get_filtered_location_df(
+                df,
+                "basic_details_repairs-block",
+                "basic_details_repairs-gp",
+                "basic_details_repairs-village",
+                selected_block,
+                selected_gp,
+                selected_village
             )
-        
+
         # -----------------------------------------
         # REPAIR TYPES PRESENT IN THIS VILLAGE
         # -----------------------------------------
@@ -2378,27 +2304,69 @@ elif page in FORMS:
             st.warning("No data found")
 
         else:
+            # -----------------------------------------
+            # COMMON MASTER FILTER FOR ALL OTHER FORMS
+            # -----------------------------------------
 
-            # Select required columns
+            (
+                selected_block,
+                selected_gp,
+                selected_village,
+                filtered_df
+            ) = (
+                None, None, None, None
+            )
+
+            block_col, gp_col, village_col = get_location_columns(
+                config, df
+            )
+
+            if all([block_col, gp_col, village_col]):
+                (
+                    selected_block,
+                    selected_gp,
+                    selected_village,
+                    filtered_df
+                ) = get_location_filter(
+                    df,
+                    block_col,
+                    gp_col,
+                    village_col,
+                    key_prefix="master"
+                )
+            else:
+                # If a form has no Block/GP/Village fields, keep its
+                # existing behaviour rather than breaking the report.
+                filtered_df = df.copy()
+
+            # -----------------------------------------
+            # DISPLAY SELECTED FORM DATA
+            # -----------------------------------------
+
             columns = config.get("columns", [])
 
             available_cols = [
-                col for col in columns if col in df.columns
+                col for col in columns if col in filtered_df.columns
             ]
 
-            df_filtered = df[available_cols]
-            column_labels = config.get("column_labels", {})
-            df_filtered = df_filtered.rename(columns=column_labels)
+            df_display = filtered_df[available_cols].copy()
 
-            st.dataframe(
-                df_filtered,
-                use_container_width=True
-            )
+            column_labels = config.get("column_labels", {})
+            df_display = df_display.rename(columns=column_labels)
+
+            if df_display.empty:
+                st.info("No data found for the selected location.")
+            else:
+                st.dataframe(
+                    df_display,
+                    use_container_width=True,
+                    hide_index=True
+                )
 
             # Download button
             st.download_button(
                 label="⬇ Download CSV",
-                data=df_filtered.to_csv(index=False),
+                data=df_display.to_csv(index=False),
                 file_name=f"{page}_report.csv",
                 mime="text/csv"
             )
