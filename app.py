@@ -124,36 +124,136 @@ elif page in FORMS:
             st.stop()
 
         # -----------------------------------------
-        # VILLAGE FILTER
+        # MASTER FILTER
+        # BLOCK → GP → VILLAGE
         # -----------------------------------------
-
-        villages = (
-            main_df["basic_details_repairs-village"]
-            .dropna()
+        
+        # Clean master location columns
+        main_df["basic_details_repairs-block"] = (
+            main_df["basic_details_repairs-block"]
+            .fillna("")
             .astype(str)
             .str.strip()
-            .unique()
-            .tolist()
         )
-
-        villages = sorted(villages)
-
+        
+        main_df["basic_details_repairs-gp"] = (
+            main_df["basic_details_repairs-gp"]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
+        
+        main_df["basic_details_repairs-village"] = (
+            main_df["basic_details_repairs-village"]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
+        
+        
+        # -----------------------------------------
+        # BLOCK
+        # -----------------------------------------
+        
+        blocks = sorted(
+            [
+                x for x in
+                main_df["basic_details_repairs-block"].unique()
+                if x
+            ]
+        )
+        
+        selected_block = st.selectbox(
+            "Select Block",
+            blocks
+        )
+        
+        
+        # -----------------------------------------
+        # GP — BASED ON SELECTED BLOCK
+        # -----------------------------------------
+        
+        gp_df = main_df[
+            main_df["basic_details_repairs-block"] == selected_block
+        ]
+        
+        gps = sorted(
+            [
+                x for x in
+                gp_df["basic_details_repairs-gp"].unique()
+                if x
+            ]
+        )
+        
+        selected_gp = st.selectbox(
+            "Select GP",
+            gps
+        )
+        
+        
+        # -----------------------------------------
+        # VILLAGE — BASED ON BLOCK + GP
+        # -----------------------------------------
+        
+        village_filter_df = gp_df[
+            gp_df["basic_details_repairs-gp"] == selected_gp
+        ]
+        
+        villages = sorted(
+            [
+                x for x in
+                village_filter_df["basic_details_repairs-village"].unique()
+                if x
+            ]
+        )
+        
         selected_village = st.selectbox(
             "Select Village",
             villages
         )
-
+        
+        
         # -----------------------------------------
-        # FILTER MAIN TABLE BY VILLAGE
+        # MASTER FILTER FUNCTION
         # -----------------------------------------
-
-        village_df = main_df[
-            main_df["basic_details_repairs-village"]
-            .astype(str)
-            .str.strip()
-            == selected_village
-        ].copy()
-
+        
+        def apply_master_filter(df):
+        
+            return df[
+                (df["basic_details_repairs-block"]
+                    .fillna("")
+                    .astype(str)
+                    .str.strip()
+                    == selected_block)
+                &
+                (df["basic_details_repairs-gp"]
+                    .fillna("")
+                    .astype(str)
+                    .str.strip()
+                    == selected_gp)
+                &
+                (df["basic_details_repairs-village"]
+                    .fillna("")
+                    .astype(str)
+                    .str.strip()
+                    == selected_village)
+            ].copy()
+        
+        
+        # -----------------------------------------
+        # FILTER MAIN TABLE
+        # -----------------------------------------
+        
+        village_df = apply_master_filter(main_df)
+        
+        
+        # -----------------------------------------
+        # SELECTED LOCATION
+        # -----------------------------------------
+        
+        st.write(f"**Selected Block:** {selected_block}")
+        st.write(f"**Selected GP:** {selected_gp}")
+        st.write(f"**Selected Village:** {selected_village}")
         st.write("Selected Village:", selected_village)
 
         # -----------------------------------------
@@ -221,12 +321,7 @@ elif page in FORMS:
                 )
 
                 # Filter to selected village
-                gwr_village_df = gwr_df[
-                    gwr_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                gwr_village_df = apply_master_filter(gwr_df)
 
                 if gwr_village_df.empty:
                     st.info(
@@ -303,12 +398,7 @@ elif page in FORMS:
                 )
             
                 # Filter selected village
-                ncg_village_df = ncg_df[
-                    ncg_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                ncg_village_df = apply_master_filter(ncg_df)
             
                 if ncg_village_df.empty:
             
@@ -407,12 +497,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                cghi_village_df = cghi_df[
-                    cghi_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                cghi_village_df = apply_master_filter(cghi_df)
                 
                 if cghi_village_df.empty:
                 
@@ -500,12 +585,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                wc_village_df = wc_df[
-                    wc_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                wc_village_df = apply_master_filter(wc_df)
                 
                 if wc_village_df.empty:
                 
@@ -579,12 +659,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                gbjl_village_df = gbjl_df[
-                    gbjl_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                gbjl_village_df = apply_master_filter(gbjl_df)
                 
                 if gbjl_village_df.empty:
                 
@@ -664,12 +739,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                lcb_village_df = lcb_df[
-                    lcb_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                lcb_village_df = apply_master_filter(lcb_df)
                 
                 if lcb_village_df.empty:
                 
@@ -743,12 +813,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                la_village_df = la_df[
-                    la_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                la_village_df = apply_master_filter(la_df)
                 
                 if la_village_df.empty:
                 
@@ -822,12 +887,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                so_village_df = so_df[
-                    so_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                so_village_df = apply_master_filter(so_df)
                 
                 if so_village_df.empty:
                 
@@ -902,12 +962,7 @@ elif page in FORMS:
                 )
                 
                 # Filter selected village
-                wsc_village_df = wsc_df[
-                    wsc_df["basic_details_repairs-village"]
-                    .astype(str)
-                    .str.strip()
-                    == selected_village
-                ].copy()
+                wsc_village_df = apply_master_filter(wsc_df)
                 
                 if wsc_village_df.empty:
                 
