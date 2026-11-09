@@ -36,3 +36,7 @@ FORMS = {
         "landscape_col": "lead_statement-village"
     }
 }
+
+# WHS APF Google Sheet Configuration
+APF_SPREADSHEET_NAME = "WHS_APF"
+APF_WORKSHEET_NAME = "APF"
