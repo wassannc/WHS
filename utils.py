@@ -42,3 +42,27 @@ def load_repeat_data(form_id, entity_url):
     if "value" not in data:
         return pd.DataFrame()
     return pd.json_normalize(data["value"])
+    
+@st.cache_data(ttl=300)
+def load_apf_data():
+
+    scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    credentials = Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=scope
+    )
+
+    client = gspread.authorize(credentials)
+
+    spreadsheet = client.open("WHS_APF")
+    worksheet = spreadsheet.worksheet("APF")
+
+    data = worksheet.get_all_records()
+
+    df = pd.DataFrame(data)
+
+    return df
