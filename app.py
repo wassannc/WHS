@@ -162,7 +162,7 @@ if main_menu == "🗺️ Maps":
 elif main_menu == "📊 Reports":
     page = st.sidebar.radio(
         "Select Report",
-        ["Form Submissions"] + list(FORMS.keys())
+        ["Form Submissions", "WHS Status"] + list(FORMS.keys())
     )
 # ---------------- Form Submissions ----------------
 
@@ -243,6 +243,26 @@ elif page == "AHT Map":
         m,
         width=1200,
         height=700
+    )
+    
+# ---------------- WHS STATUS ----------------
+
+elif page == "WHS Status":
+
+    st.title("💧 WHS Status")
+
+    df = load_apf_data()
+
+    if df.empty:
+        st.warning("No APF data found in Google Sheet.")
+        st.stop()
+
+    st.subheader("APF Village-wise Status")
+
+    st.dataframe(
+        df,
+        use_container_width=True,
+        hide_index=True
     )
 # ---------------- FORM REPORTS ----------------
 
